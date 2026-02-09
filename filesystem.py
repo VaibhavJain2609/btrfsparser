@@ -21,6 +21,7 @@ class FileEntry:
     path: str
     size: int
     type: str             # 'file', 'directory', 'symlink', etc.
+    category: str         # Categorized type: 'image', 'document', 'configuration', etc.
     mode: int
     mode_str: str         # 'drwxr-xr-x'
     uid: int
@@ -385,6 +386,102 @@ def get_file_type(mode: int) -> str:
         return 'unknown'
 
 
+def categorize_file_by_extension(filename: str, base_type: str) -> str:
+    """
+    Categorize file based on extension and base type.
+
+    Args:
+        filename: Name of the file
+        base_type: Base type from get_file_type() ('file', 'directory', etc.)
+
+    Returns:
+        Categorized type (e.g., 'image', 'document', 'configuration', etc.)
+    """
+    # Non-file types keep their original category
+    if base_type != 'file':
+        return base_type
+
+    # Extract extension (lowercase)
+    ext = ''
+    if '.' in filename:
+        ext = filename.rsplit('.', 1)[-1].lower()
+
+    # Image files
+    if ext in ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'tif', 'webp', 'svg', 'ico']:
+        return 'image'
+
+    # Video files
+    if ext in ['mp4', 'avi', 'mkv', 'mov', 'wmv', 'flv', 'webm', 'mpeg', 'mpg', 'm4v']:
+        return 'video'
+
+    # Audio files
+    if ext in ['mp3', 'wav', 'flac', 'aac', 'ogg', 'wma', 'm4a', 'opus']:
+        return 'audio'
+
+    # Document files
+    if ext in ['pdf', 'doc', 'docx', 'odt', 'rtf', 'txt', 'tex']:
+        return 'document'
+
+    # Spreadsheet files
+    if ext in ['xls', 'xlsx', 'ods', 'csv']:
+        return 'spreadsheet'
+
+    # Presentation files
+    if ext in ['ppt', 'pptx', 'odp']:
+        return 'presentation'
+
+    # Archive files
+    if ext in ['zip', 'tar', 'gz', 'bz2', 'xz', '7z', 'rar', 'tgz', 'tbz2']:
+        return 'archive'
+
+    # Source code files
+    if ext in ['py', 'js', 'java', 'c', 'cpp', 'h', 'hpp', 'cs', 'go', 'rs', 'rb', 'php', 'swift', 'kt']:
+        return 'source-code'
+
+    # Web files
+    if ext in ['html', 'htm', 'css', 'scss', 'sass', 'less']:
+        return 'web'
+
+    # Script files
+    if ext in ['sh', 'bash', 'zsh', 'fish', 'bat', 'cmd', 'ps1']:
+        return 'script'
+
+    # Data/Config files
+    if ext in ['json', 'yaml', 'yml', 'toml', 'ini', 'conf', 'cfg', 'config']:
+        return 'configuration'
+
+    # XML files
+    if ext in ['xml', 'xsd', 'xsl', 'xslt']:
+        return 'xml'
+
+    # Database files
+    if ext in ['db', 'sqlite', 'sqlite3', 'mdb', 'accdb']:
+        return 'database'
+
+    # Executable files
+    if ext in ['exe', 'dll', 'so', 'dylib', 'app', 'bin']:
+        return 'executable'
+
+    # Object/Library files
+    if ext in ['o', 'obj', 'a', 'lib']:
+        return 'object-file'
+
+    # Log files
+    if ext in ['log']:
+        return 'log'
+
+    # Certificate/Key files
+    if ext in ['pem', 'crt', 'cer', 'key', 'pub']:
+        return 'certificate'
+
+    # Backup files
+    if ext in ['bak', 'backup', 'old', 'orig']:
+        return 'backup'
+
+    # Default for unrecognized files
+    return 'file'
+
+
 def read_file_data(f: BinaryIO, extents: List[tuple], chunk_map: ChunkMap,
                    max_size: int = 0) -> bytes:
     """
@@ -507,12 +604,16 @@ def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
             continue
 
         try:
+            # Categorize file based on extension
+            category = categorize_file_by_extension(name, file_type)
+
             entry = FileEntry(
                 inode=original_inode,
                 name=name,
                 path=path,
                 size=inode_item.size,
                 type=file_type,
+                category=category,
                 mode=mode,
                 mode_str=parse_mode(mode),
                 uid=inode_item.uid,

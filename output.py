@@ -10,6 +10,17 @@ from dataclasses import asdict
 from filesystem import FileEntry
 
 
+def calculate_statistics(entries: List[FileEntry]) -> dict:
+    """Calculate file type statistics from entries."""
+    stats = {}
+    for entry in entries:
+        category = entry.category
+        if category not in stats:
+            stats[category] = 0
+        stats[category] += 1
+    return stats
+
+
 def to_json(entries: List[FileEntry], indent: int = 2) -> str:
     """Convert file entries to JSON string."""
     return json.dumps([asdict(e) for e in entries], indent=indent)
@@ -18,7 +29,7 @@ def to_json(entries: List[FileEntry], indent: int = 2) -> str:
 def to_csv(entries: List[FileEntry]) -> str:
     """Convert file entries to CSV string."""
     output = StringIO()
-    fieldnames = ['path', 'name', 'type', 'size', 'mode_str',
+    fieldnames = ['path', 'name', 'type', 'category', 'size', 'mode_str',
                   'uid', 'gid', 'nlink',
                   'atime', 'mtime', 'ctime', 'otime',
                   'inode', 'subvolume_id',
@@ -35,6 +46,7 @@ def to_csv(entries: List[FileEntry]) -> str:
             'path': entry.path,
             'name': entry.name,
             'type': entry.type,
+            'category': entry.category,
             'size': entry.size,
             'mode_str': entry.mode_str,
             'uid': entry.uid,
@@ -80,6 +92,26 @@ def to_console(entries: List[FileEntry]) -> str:
             f"{entry.mode_str:<12} {entry.uid:>5} {entry.gid:>5} "
             f"{size_str:>12} {mtime_short:<20} {entry.path}"
         )
+
+    # Add summary statistics
+    lines.append('')
+    lines.append('=' * 80)
+    lines.append('SUMMARY STATISTICS')
+    lines.append('=' * 80)
+
+    stats = calculate_statistics(entries)
+
+    # Sort by count (descending) for better readability
+    sorted_stats = sorted(stats.items(), key=lambda x: x[1], reverse=True)
+
+    lines.append(f"{'Category':<30} {'Count':>10}")
+    lines.append('-' * 42)
+
+    for category, count in sorted_stats:
+        lines.append(f"{category:<30} {count:>10,}")
+
+    lines.append('-' * 42)
+    lines.append(f"{'Total':<30} {sum(stats.values()):>10,}")
 
     return '\n'.join(lines)
 

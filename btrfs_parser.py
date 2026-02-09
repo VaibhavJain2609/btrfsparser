@@ -17,11 +17,15 @@ import sys
 from superblock import read_superblock, print_superblock_info
 from chunk import parse_sys_chunk_array, read_chunk_tree, ChunkMap
 <<<<<<< HEAD
+<<<<<<< HEAD
 from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes, parse_checksum_tree
 from output import to_json, to_csv, to_console, to_tree
 from statistics import calculate_statistics, write_statistics_json
 =======
 from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes
+=======
+from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes, parse_checksum_tree
+>>>>>>> 286cf09 (feat: added hashing)
 from output import to_json, to_csv, to_console, to_tree
 >>>>>>> f40cb6e (initial commit)
 
@@ -79,10 +83,14 @@ Offset formats:
     parser.add_argument('image', help='Path to BTRFS image file (.img)')
     parser.add_argument('-p', '--partition-offset',
 <<<<<<< HEAD
+<<<<<<< HEAD
                         type=str, default='4198400s',
 =======
                         type=str, default='0',
 >>>>>>> f40cb6e (initial commit)
+=======
+                        type=str, default='4198400s',
+>>>>>>> 286cf09 (feat: added hashing)
                         help='Partition start offset (sectors with "s" suffix, hex with "0x", or bytes)')
     parser.add_argument('-o', '--output',
                         choices=['console', 'json', 'csv', 'tree'],
@@ -170,6 +178,9 @@ Offset formats:
                 print(f"  Found {len(fs.inodes)} total inodes", file=sys.stderr)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 286cf09 (feat: added hashing)
             # Step 4b: Parse checksum tree
             if args.verbose:
                 print("Parsing checksum tree...", file=sys.stderr)
@@ -179,6 +190,7 @@ Offset formats:
             if args.verbose:
                 print(f"  Found {len(fs.checksums)} checksum ranges", file=sys.stderr)
 
+<<<<<<< HEAD
         # Step 5: Extract file entries
         with open(args.image, 'rb') as f:
             entries = extract_files(fs, chunk_map, f)
@@ -186,6 +198,11 @@ Offset formats:
         # Step 5: Extract file entries
         entries = extract_files(fs)
 >>>>>>> f40cb6e (initial commit)
+=======
+        # Step 5: Extract file entries
+        with open(args.image, 'rb') as f:
+            entries = extract_files(fs, chunk_map, f)
+>>>>>>> 286cf09 (feat: added hashing)
 
         if args.verbose:
             print(f"  Extracted {len(entries)} entries", file=sys.stderr)

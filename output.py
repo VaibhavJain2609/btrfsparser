@@ -20,6 +20,9 @@ def to_csv(entries: List[FileEntry]) -> str:
     output = StringIO()
     fieldnames = ['path', 'name', 'type', 'size', 'mode_str',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 286cf09 (feat: added hashing)
                   'uid', 'gid', 'nlink',
                   'atime', 'mtime', 'ctime', 'otime',
                   'inode', 'subvolume_id',
@@ -27,9 +30,12 @@ def to_csv(entries: List[FileEntry]) -> str:
                   'extent_count', 'disk_bytes', 'physical_offset',
                   'xattr_count', 'checksum_count',
                   'md5', 'sha256']
+<<<<<<< HEAD
 =======
                   'uid', 'gid', 'nlink', 'atime', 'mtime', 'ctime', 'otime', 'inode']
 >>>>>>> f40cb6e (initial commit)
+=======
+>>>>>>> 286cf09 (feat: added hashing)
 
     writer = csv.DictWriter(output, fieldnames=fieldnames)
     writer.writeheader()
@@ -50,6 +56,9 @@ def to_csv(entries: List[FileEntry]) -> str:
             'otime': entry.otime,
             'inode': entry.inode,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 286cf09 (feat: added hashing)
             'subvolume_id': entry.subvolume_id,
             'generation': entry.generation,
             'transid': entry.transid,
@@ -62,8 +71,11 @@ def to_csv(entries: List[FileEntry]) -> str:
             'checksum_count': entry.checksum_count,
             'md5': entry.md5,
             'sha256': entry.sha256,
+<<<<<<< HEAD
 =======
 >>>>>>> f40cb6e (initial commit)
+=======
+>>>>>>> 286cf09 (feat: added hashing)
         }
         writer.writerow(row)
 

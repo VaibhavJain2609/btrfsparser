@@ -25,11 +25,14 @@ python btrfs_parser.py image.img -o tree          # tree view
 # Show superblock info only
 python btrfs_parser.py image.img --info-only
 
+<<<<<<< HEAD
 # Generate statistics
 python btrfs_parser.py image.img --stats              # Creates image_stats.json
 python btrfs_parser.py image.img --stats -v           # With verbose output
 python btrfs_parser.py image.img -o json --stats      # Both JSON output + stats
 
+=======
+>>>>>>> 286cf09 (feat: added hashing)
 # Debug script for analyzing BTRFS structures
 python debug.py image.img [partition_offset]
 ```
@@ -55,9 +58,13 @@ btrfs_parser.py   # CLI entry point, orchestrates the parsing pipeline
     │
     ├── constants.py     # Magic numbers, type enums, field offsets
     │
+<<<<<<< HEAD
     ├── output.py        # Formatters (JSON, CSV, console, tree)
     │
     └── statistics.py    # Statistics calculation and aggregation
+=======
+    └── output.py        # Formatters (JSON, CSV, console, tree)
+>>>>>>> 286cf09 (feat: added hashing)
 ```
 
 ### Parsing Pipeline

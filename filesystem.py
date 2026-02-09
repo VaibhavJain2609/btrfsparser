@@ -3,12 +3,20 @@ BTRFS Filesystem Parser - Extract files and directories from filesystem tree.
 """
 import struct
 import stat
+<<<<<<< HEAD
 import hashlib
 from typing import Dict, List, Optional, BinaryIO
 from dataclasses import dataclass, field
 
 from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock, BtrfsFileExtentItem
 from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode, parse_inode_flags
+=======
+from typing import Dict, List, Optional, BinaryIO
+from dataclasses import dataclass, field
+
+from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock
+from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode
+>>>>>>> f40cb6e (initial commit)
 from chunk import ChunkMap
 from btree import traverse_tree_all
 
@@ -31,6 +39,7 @@ class FileEntry:
     ctime: str
     otime: str            # creation time
     parent_inode: Optional[int] = None
+<<<<<<< HEAD
     # Phase 1: Already parsed data
     generation: Optional[int] = None          # Transaction ID when created
     transid: Optional[int] = None             # Last modification transaction
@@ -50,6 +59,8 @@ class FileEntry:
     # Cryptographic hashes
     md5: Optional[str] = None                 # MD5 hash of file contents
     sha256: Optional[str] = None              # SHA256 hash of file contents
+=======
+>>>>>>> f40cb6e (initial commit)
 
 
 @dataclass
@@ -60,9 +71,12 @@ class FileSystem:
     parents: Dict[int, int] = field(default_factory=dict)         # inode -> parent_inode
     children: Dict[int, List[int]] = field(default_factory=dict)  # inode -> [child_inodes]
     dir_entries: Dict[int, List[BtrfsDirItem]] = field(default_factory=dict)
+<<<<<<< HEAD
     xattrs: Dict[int, List[tuple]] = field(default_factory=dict)  # inode -> [(name, value)]
     extents: Dict[int, List[tuple]] = field(default_factory=dict) # inode -> [(file_offset, disk_bytenr, disk_bytes, compression)]
     checksums: Dict[int, int] = field(default_factory=dict)       # logical_offset -> checksum_count
+=======
+>>>>>>> f40cb6e (initial commit)
 
 
 def find_fs_tree_root(f: BinaryIO, sb: BtrfsSuperblock,
@@ -86,6 +100,7 @@ def find_fs_tree_root(f: BinaryIO, sb: BtrfsSuperblock,
     raise ValueError("Filesystem tree root not found")
 
 
+<<<<<<< HEAD
 def find_csum_tree_root(f: BinaryIO, sb: BtrfsSuperblock,
                         chunk_map: ChunkMap) -> Optional[int]:
     """
@@ -147,6 +162,8 @@ def parse_checksum_tree(f: BinaryIO, sb: BtrfsSuperblock,
     return checksums
 
 
+=======
+>>>>>>> f40cb6e (initial commit)
 def find_all_subvolumes(f: BinaryIO, sb: BtrfsSuperblock,
                         chunk_map: ChunkMap) -> List[tuple]:
     """
@@ -224,6 +241,7 @@ def parse_all_subvolumes(f: BinaryIO, sb: BtrfsSuperblock,
                     unique_parent = (objectid << 48) | parent
                     combined_fs.parents[unique_inode] = unique_parent
 
+<<<<<<< HEAD
                 # Update extents with unique_inode key
                 if inode in fs.extents:
                     combined_fs.extents[unique_inode] = fs.extents[inode]
@@ -232,6 +250,8 @@ def parse_all_subvolumes(f: BinaryIO, sb: BtrfsSuperblock,
                 if inode in fs.xattrs:
                     combined_fs.xattrs[unique_inode] = fs.xattrs[inode]
 
+=======
+>>>>>>> f40cb6e (initial commit)
             # Store subvolume root info
             # The root inode (256) of each subvolume
             root_inode = (objectid << 48) | 256
@@ -290,6 +310,7 @@ def parse_filesystem(f: BinaryIO, fs_tree_root: int,
                         fs.dir_entries[objectid] = []
                     fs.dir_entries[objectid].append(dir_item)
 
+<<<<<<< HEAD
             elif item_type == BTRFS_TYPE.XATTR_ITEM:
                 # Parse extended attribute (reuses DIR_ITEM structure)
                 if len(data) >= 30:
@@ -315,6 +336,8 @@ def parse_filesystem(f: BinaryIO, fs_tree_root: int,
                         extent.compression
                     ))
 
+=======
+>>>>>>> f40cb6e (initial commit)
         except Exception:
             # Skip malformed items
             continue
@@ -385,6 +408,7 @@ def get_file_type(mode: int) -> str:
         return 'unknown'
 
 
+<<<<<<< HEAD
 def read_file_data(f: BinaryIO, extents: List[tuple], chunk_map: ChunkMap,
                    max_size: int = 0) -> bytes:
     """
@@ -492,6 +516,12 @@ def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
 
         return total_checksums
 
+=======
+def extract_files(fs: FileSystem) -> List[FileEntry]:
+    """Convert parsed filesystem to list of FileEntry objects."""
+    entries = []
+
+>>>>>>> f40cb6e (initial commit)
     for unique_inode, inode_item in fs.inodes.items():
         # Extract original inode (lower 48 bits) and subvolume id (upper 16 bits)
         original_inode = unique_inode & 0xFFFFFFFFFFFF
@@ -522,6 +552,7 @@ def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
                 mtime=inode_item.mtime.to_iso(),
                 ctime=inode_item.ctime.to_iso(),
                 otime=inode_item.otime.to_iso(),
+<<<<<<< HEAD
                 parent_inode=fs.parents.get(unique_inode),
                 # Phase 1: Already parsed data
                 generation=inode_item.generation,
@@ -565,6 +596,10 @@ def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
                     # Skip files that fail to read
                     pass
 
+=======
+                parent_inode=fs.parents.get(unique_inode)
+            )
+>>>>>>> f40cb6e (initial commit)
             entries.append(entry)
         except Exception:
             # Skip entries that fail to convert

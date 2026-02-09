@@ -163,6 +163,7 @@ class BtrfsInodeItem:
 
 
 @dataclass
+<<<<<<< HEAD
 class BtrfsFileExtentItem:
     """Variable length - file extent mapping to disk."""
     generation: int       # 8 bytes
@@ -208,6 +209,8 @@ class BtrfsFileExtentItem:
 
 
 @dataclass
+=======
+>>>>>>> f40cb6e (initial commit)
 class BtrfsDirItem:
     """Variable length - directory entry."""
     location: BtrfsKey    # 17 bytes - key of target inode

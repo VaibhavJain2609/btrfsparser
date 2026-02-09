@@ -151,6 +151,7 @@ FT_NAMES = {
 }
 
 
+<<<<<<< HEAD
 class BTRFS_INODE_FLAGS:
     """Inode flags (from inode_item.flags field)."""
     NODATASUM = 1 << 0      # Don't checksum
@@ -201,6 +202,8 @@ def parse_inode_flags(flags: int) -> str:
     return ','.join(result)
 
 
+=======
+>>>>>>> f40cb6e (initial commit)
 def parse_mode(mode: int) -> str:
     """Convert mode integer to string like 'drwxr-xr-x'."""
     file_type = {

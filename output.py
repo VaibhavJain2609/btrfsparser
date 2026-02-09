@@ -19,7 +19,13 @@ def to_csv(entries: List[FileEntry]) -> str:
     """Convert file entries to CSV string."""
     output = StringIO()
     fieldnames = ['path', 'name', 'type', 'size', 'mode_str',
-                  'uid', 'gid', 'nlink', 'atime', 'mtime', 'ctime', 'otime', 'inode']
+                  'uid', 'gid', 'nlink',
+                  'atime', 'mtime', 'ctime', 'otime',
+                  'inode', 'subvolume_id',
+                  'generation', 'transid', 'flags', 'flags_str',
+                  'extent_count', 'disk_bytes', 'physical_offset',
+                  'xattr_count', 'checksum_count',
+                  'md5', 'sha256']
 
     writer = csv.DictWriter(output, fieldnames=fieldnames)
     writer.writeheader()
@@ -39,6 +45,18 @@ def to_csv(entries: List[FileEntry]) -> str:
             'ctime': entry.ctime,
             'otime': entry.otime,
             'inode': entry.inode,
+            'subvolume_id': entry.subvolume_id,
+            'generation': entry.generation,
+            'transid': entry.transid,
+            'flags': entry.flags,
+            'flags_str': entry.flags_str,
+            'extent_count': entry.extent_count,
+            'disk_bytes': entry.disk_bytes,
+            'physical_offset': entry.physical_offset,
+            'xattr_count': entry.xattr_count,
+            'checksum_count': entry.checksum_count,
+            'md5': entry.md5,
+            'sha256': entry.sha256,
         }
         writer.writerow(row)
 

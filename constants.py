@@ -151,6 +151,56 @@ FT_NAMES = {
 }
 
 
+class BTRFS_INODE_FLAGS:
+    """Inode flags (from inode_item.flags field)."""
+    NODATASUM = 1 << 0      # Don't checksum
+    NODATACOW = 1 << 1      # Don't COW data
+    READONLY = 1 << 2       # Readonly inode
+    NOCOMPRESS = 1 << 3     # Don't compress
+    PREALLOC = 1 << 4       # Preallocated extent
+    SYNC = 1 << 5           # Sync updates
+    IMMUTABLE = 1 << 6      # Immutable file
+    APPEND = 1 << 7         # Append only
+    NODUMP = 1 << 8         # Don't dump
+    NOATIME = 1 << 9        # Don't update atime
+    DIRSYNC = 1 << 10       # Directory sync
+    COMPRESS = 1 << 11      # Compress this file
+
+
+def parse_inode_flags(flags: int) -> str:
+    """Convert inode flags to comma-separated string."""
+    if flags == 0:
+        return ''
+
+    result = []
+    if flags & BTRFS_INODE_FLAGS.NODATASUM:
+        result.append('NODATASUM')
+    if flags & BTRFS_INODE_FLAGS.NODATACOW:
+        result.append('NODATACOW')
+    if flags & BTRFS_INODE_FLAGS.READONLY:
+        result.append('READONLY')
+    if flags & BTRFS_INODE_FLAGS.NOCOMPRESS:
+        result.append('NOCOMPRESS')
+    if flags & BTRFS_INODE_FLAGS.PREALLOC:
+        result.append('PREALLOC')
+    if flags & BTRFS_INODE_FLAGS.SYNC:
+        result.append('SYNC')
+    if flags & BTRFS_INODE_FLAGS.IMMUTABLE:
+        result.append('IMMUTABLE')
+    if flags & BTRFS_INODE_FLAGS.APPEND:
+        result.append('APPEND')
+    if flags & BTRFS_INODE_FLAGS.NODUMP:
+        result.append('NODUMP')
+    if flags & BTRFS_INODE_FLAGS.NOATIME:
+        result.append('NOATIME')
+    if flags & BTRFS_INODE_FLAGS.DIRSYNC:
+        result.append('DIRSYNC')
+    if flags & BTRFS_INODE_FLAGS.COMPRESS:
+        result.append('COMPRESS')
+
+    return ','.join(result)
+
+
 def parse_mode(mode: int) -> str:
     """Convert mode integer to string like 'drwxr-xr-x'."""
     file_type = {

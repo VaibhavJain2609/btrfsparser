@@ -3,11 +3,12 @@ BTRFS Filesystem Parser - Extract files and directories from filesystem tree.
 """
 import struct
 import stat
+import hashlib
 from typing import Dict, List, Optional, BinaryIO
 from dataclasses import dataclass, field
 
-from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock
-from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode
+from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock, BtrfsFileExtentItem
+from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode, parse_inode_flags
 from chunk import ChunkMap
 from btree import traverse_tree_all
 
@@ -30,6 +31,25 @@ class FileEntry:
     ctime: str
     otime: str            # creation time
     parent_inode: Optional[int] = None
+    # Phase 1: Already parsed data
+    generation: Optional[int] = None          # Transaction ID when created
+    transid: Optional[int] = None             # Last modification transaction
+    flags: Optional[int] = None               # Raw flag bits
+    flags_str: Optional[str] = None           # Decoded: "NODATASUM,COMPRESS"
+    # Phase 5: Subvolume
+    subvolume_id: Optional[int] = None        # Subvolume/snapshot ID
+    # Phase 2: XATTRs
+    xattr_count: int = 0                      # Number of extended attributes
+    # Phase 3: Extents
+    extent_count: int = 0                     # Number of extents
+    disk_bytes: int = 0                       # Total bytes on disk (compressed)
+    # Phase 6: Physical offset
+    physical_offset: Optional[int] = None     # Raw disk offset (first extent)
+    # Phase 4: Checksums
+    checksum_count: int = 0                   # Number of checksums covering file
+    # Cryptographic hashes
+    md5: Optional[str] = None                 # MD5 hash of file contents
+    sha256: Optional[str] = None              # SHA256 hash of file contents
 
 
 @dataclass
@@ -40,6 +60,9 @@ class FileSystem:
     parents: Dict[int, int] = field(default_factory=dict)         # inode -> parent_inode
     children: Dict[int, List[int]] = field(default_factory=dict)  # inode -> [child_inodes]
     dir_entries: Dict[int, List[BtrfsDirItem]] = field(default_factory=dict)
+    xattrs: Dict[int, List[tuple]] = field(default_factory=dict)  # inode -> [(name, value)]
+    extents: Dict[int, List[tuple]] = field(default_factory=dict) # inode -> [(file_offset, disk_bytenr, disk_bytes, compression)]
+    checksums: Dict[int, int] = field(default_factory=dict)       # logical_offset -> checksum_count
 
 
 def find_fs_tree_root(f: BinaryIO, sb: BtrfsSuperblock,
@@ -61,6 +84,67 @@ def find_fs_tree_root(f: BinaryIO, sb: BtrfsSuperblock,
                 return bytenr
 
     raise ValueError("Filesystem tree root not found")
+
+
+def find_csum_tree_root(f: BinaryIO, sb: BtrfsSuperblock,
+                        chunk_map: ChunkMap) -> Optional[int]:
+    """
+    Find the checksum tree root from root tree.
+    Search for ROOT_ITEM with objectid=CSUM_TREE (7).
+    Returns None if checksum tree doesn't exist.
+    """
+    try:
+        items = traverse_tree_all(f, sb.root, chunk_map, sb.nodesize)
+
+        for item, data in items:
+            if (item.key.objectid == BTRFS_OBJECTID.CSUM_TREE and
+                item.key.type == BTRFS_TYPE.ROOT_ITEM):
+                if len(data) >= 184:
+                    bytenr = struct.unpack_from('<Q', data, 176)[0]
+                    return bytenr
+    except Exception:
+        pass
+
+    return None
+
+
+def parse_checksum_tree(f: BinaryIO, sb: BtrfsSuperblock,
+                        chunk_map: ChunkMap) -> Dict[int, int]:
+    """
+    Parse checksum tree and return map of logical_offset -> checksum_count.
+
+    Checksum tree items:
+    - key.objectid = BTRFS_OBJECTID.EXTENT_CSUM (-10)
+    - key.type = BTRFS_TYPE.EXTENT_CSUM (128)
+    - key.offset = logical byte offset
+    - data = array of 4-byte CRC32C checksums
+
+    Returns: Dict mapping logical offset ranges to checksum counts
+    """
+    csum_root = find_csum_tree_root(f, sb, chunk_map)
+    if not csum_root:
+        return {}
+
+    checksums = {}
+    blocksize = sb.sectorsize  # Typically 4096 bytes per checksum
+
+    try:
+        items = traverse_tree_all(f, csum_root, chunk_map, sb.nodesize)
+
+        for item, data in items:
+            if item.key.type == BTRFS_TYPE.EXTENT_CSUM:
+                # key.offset = starting logical byte offset
+                logical_start = item.key.offset
+                # Each checksum is 4 bytes (CRC32C), covers one block
+                num_checksums = len(data) // 4
+                # Store: logical_start -> num_checksums
+                checksums[logical_start] = num_checksums
+
+    except Exception:
+        # If checksum tree parsing fails, return empty dict
+        pass
+
+    return checksums
 
 
 def find_all_subvolumes(f: BinaryIO, sb: BtrfsSuperblock,
@@ -140,6 +224,14 @@ def parse_all_subvolumes(f: BinaryIO, sb: BtrfsSuperblock,
                     unique_parent = (objectid << 48) | parent
                     combined_fs.parents[unique_inode] = unique_parent
 
+                # Update extents with unique_inode key
+                if inode in fs.extents:
+                    combined_fs.extents[unique_inode] = fs.extents[inode]
+
+                # Update xattrs with unique_inode key
+                if inode in fs.xattrs:
+                    combined_fs.xattrs[unique_inode] = fs.xattrs[inode]
+
             # Store subvolume root info
             # The root inode (256) of each subvolume
             root_inode = (objectid << 48) | 256
@@ -197,6 +289,31 @@ def parse_filesystem(f: BinaryIO, fs_tree_root: int,
                     if objectid not in fs.dir_entries:
                         fs.dir_entries[objectid] = []
                     fs.dir_entries[objectid].append(dir_item)
+
+            elif item_type == BTRFS_TYPE.XATTR_ITEM:
+                # Parse extended attribute (reuses DIR_ITEM structure)
+                if len(data) >= 30:
+                    xattr = BtrfsDirItem.unpack(data)
+                    if objectid not in fs.xattrs:
+                        fs.xattrs[objectid] = []
+                    # Store xattr name and data (if data_len > 0, data follows name)
+                    xattr_data = data[30+xattr.name_len:30+xattr.name_len+xattr.data_len] if xattr.data_len > 0 else b''
+                    fs.xattrs[objectid].append((xattr.name, xattr_data))
+
+            elif item_type == BTRFS_TYPE.EXTENT_DATA:
+                # Parse file extent data
+                if len(data) >= 21:
+                    extent = BtrfsFileExtentItem.unpack(data)
+                    if objectid not in fs.extents:
+                        fs.extents[objectid] = []
+                    # key.offset = file offset
+                    # Store: (file_offset, disk_bytenr, disk_num_bytes, compression)
+                    fs.extents[objectid].append((
+                        item.key.offset,
+                        extent.disk_bytenr,
+                        extent.disk_num_bytes,
+                        extent.compression
+                    ))
 
         except Exception:
             # Skip malformed items
@@ -268,9 +385,112 @@ def get_file_type(mode: int) -> str:
         return 'unknown'
 
 
-def extract_files(fs: FileSystem) -> List[FileEntry]:
+def read_file_data(f: BinaryIO, extents: List[tuple], chunk_map: ChunkMap,
+                   max_size: int = 0) -> bytes:
+    """
+    Read file data by following extent mappings.
+
+    Args:
+        f: Open file handle to disk image
+        extents: List of (file_offset, disk_bytenr, disk_num_bytes, compression)
+        chunk_map: ChunkMap for logical->physical translation
+        max_size: Maximum bytes to read (0 = read all)
+
+    Returns:
+        File data as bytes
+    """
+    if not extents:
+        return b''
+
+    # Sort extents by file offset
+    sorted_extents = sorted(extents, key=lambda e: e[0])
+
+    file_data = bytearray()
+
+    for file_offset, disk_bytenr, disk_num_bytes, compression in sorted_extents:
+        # Skip holes (sparse regions)
+        if disk_bytenr == 0:
+            # Fill with zeros for hole
+            file_data.extend(b'\x00' * disk_num_bytes)
+            continue
+
+        # Skip compressed extents (would need decompression)
+        if compression != 0:
+            continue
+
+        # Translate logical to physical address
+        physical_offset = chunk_map.logical_to_physical(disk_bytenr)
+        if not physical_offset:
+            continue
+
+        # Read extent data
+        try:
+            f.seek(physical_offset)
+            extent_data = f.read(disk_num_bytes)
+            file_data.extend(extent_data)
+        except Exception:
+            continue
+
+        # Stop if we've read enough
+        if max_size > 0 and len(file_data) >= max_size:
+            break
+
+    # Truncate to max_size if specified
+    if max_size > 0 and len(file_data) > max_size:
+        file_data = file_data[:max_size]
+
+    return bytes(file_data)
+
+
+def calculate_hashes(data: bytes) -> tuple:
+    """
+    Calculate MD5 and SHA256 hashes for data.
+
+    Returns:
+        (md5_hex, sha256_hex)
+    """
+    if not data:
+        return (None, None)
+
+    md5_hash = hashlib.md5(data).hexdigest()
+    sha256_hash = hashlib.sha256(data).hexdigest()
+
+    return (md5_hash, sha256_hash)
+
+
+def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
+                  disk_file: Optional[BinaryIO] = None) -> List[FileEntry]:
     """Convert parsed filesystem to list of FileEntry objects."""
     entries = []
+
+    # Helper function to count checksums for a file's extents
+    def count_checksums(unique_inode: int) -> int:
+        """Count how many checksums cover this file's extents."""
+        if unique_inode not in fs.extents or not fs.checksums:
+            return 0
+
+        total_checksums = 0
+        for file_offset, disk_bytenr, disk_bytes, compression in fs.extents[unique_inode]:
+            if disk_bytenr == 0:  # Skip holes/sparse extents
+                continue
+
+            # Find checksums that overlap with this extent
+            # Checksums are indexed by logical offset (disk_bytenr)
+            for csum_start, csum_count in fs.checksums.items():
+                csum_end = csum_start + (csum_count * 4096)  # Assume 4K per checksum
+                extent_end = disk_bytenr + disk_bytes
+
+                # Check if ranges overlap
+                if disk_bytenr < csum_end and extent_end > csum_start:
+                    # Calculate overlap
+                    overlap_start = max(disk_bytenr, csum_start)
+                    overlap_end = min(extent_end, csum_end)
+                    overlap_bytes = overlap_end - overlap_start
+                    if overlap_bytes > 0:
+                        # Count checksums in overlap (one per 4K block)
+                        total_checksums += (overlap_bytes + 4095) // 4096
+
+        return total_checksums
 
     for unique_inode, inode_item in fs.inodes.items():
         # Extract original inode (lower 48 bits) and subvolume id (upper 16 bits)
@@ -302,8 +522,49 @@ def extract_files(fs: FileSystem) -> List[FileEntry]:
                 mtime=inode_item.mtime.to_iso(),
                 ctime=inode_item.ctime.to_iso(),
                 otime=inode_item.otime.to_iso(),
-                parent_inode=fs.parents.get(unique_inode)
+                parent_inode=fs.parents.get(unique_inode),
+                # Phase 1: Already parsed data
+                generation=inode_item.generation,
+                transid=inode_item.transid,
+                flags=inode_item.flags,
+                flags_str=parse_inode_flags(inode_item.flags),
+                # Phase 5: Subvolume ID
+                subvolume_id=subvol_id,
+                # Phase 2: Extended attributes count
+                xattr_count=len(fs.xattrs.get(unique_inode, [])),
+                # Phase 3: Extent data summary
+                extent_count=len(fs.extents.get(unique_inode, [])),
+                disk_bytes=sum(e[2] for e in fs.extents.get(unique_inode, [])),
+                # Phase 6: Physical offset (first extent)
+                physical_offset=None,
+                # Phase 4: Checksum count
+                checksum_count=count_checksums(unique_inode)
             )
+
+            # Calculate physical offset if we have extents and chunk_map
+            if chunk_map and unique_inode in fs.extents and fs.extents[unique_inode]:
+                first_extent = fs.extents[unique_inode][0]
+                logical_addr = first_extent[1]  # disk_bytenr
+                if logical_addr > 0:  # Skip holes/sparse extents
+                    physical_offset = chunk_map.logical_to_physical(logical_addr)
+                    if physical_offset:
+                        entry.physical_offset = physical_offset
+
+            # Calculate MD5/SHA256 hashes for regular files
+            if (file_type == 'file' and disk_file and chunk_map and
+                unique_inode in fs.extents and inode_item.size > 0):
+                try:
+                    # Read file data (limit to actual file size)
+                    file_data = read_file_data(disk_file, fs.extents[unique_inode],
+                                              chunk_map, inode_item.size)
+                    # Calculate hashes
+                    md5_hash, sha256_hash = calculate_hashes(file_data)
+                    entry.md5 = md5_hash
+                    entry.sha256 = sha256_hash
+                except Exception:
+                    # Skip files that fail to read
+                    pass
+
             entries.append(entry)
         except Exception:
             # Skip entries that fail to convert

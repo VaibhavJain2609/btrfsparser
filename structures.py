@@ -163,6 +163,51 @@ class BtrfsInodeItem:
 
 
 @dataclass
+class BtrfsFileExtentItem:
+    """Variable length - file extent mapping to disk."""
+    generation: int       # 8 bytes
+    ram_bytes: int        # 8 bytes - uncompressed size
+    compression: int      # 1 byte - 0=none, 1=zlib, 2=lzo, 3=zstd
+    encryption: int       # 1 byte
+    other: int           # 2 bytes (reserved)
+    type: int            # 1 byte - 0=inline, 1=regular, 2=prealloc
+    # For type=1 (regular extent):
+    disk_bytenr: int     # 8 bytes - logical disk address (0 if hole/sparse)
+    disk_num_bytes: int  # 8 bytes - size on disk (compressed)
+    offset: int          # 8 bytes - offset into uncompressed extent
+    num_bytes: int       # 8 bytes - number of bytes in this extent
+
+    @classmethod
+    def unpack(cls, data: bytes, pos: int = 0) -> 'BtrfsFileExtentItem':
+        if len(data) < pos + 21:
+            raise ValueError("Data too short for BtrfsFileExtentItem")
+
+        generation = struct.unpack_from('<Q', data, pos)[0]
+        ram_bytes = struct.unpack_from('<Q', data, pos+8)[0]
+        compression = struct.unpack_from('<B', data, pos+16)[0]
+        encryption = struct.unpack_from('<B', data, pos+17)[0]
+        other = struct.unpack_from('<H', data, pos+18)[0]
+        type_ = struct.unpack_from('<B', data, pos+20)[0]
+
+        # For inline extents (type=0), data is embedded and there's no disk_bytenr
+        # For regular/prealloc extents (type=1,2), parse disk location
+        if type_ in (1, 2) and len(data) >= pos + 53:
+            disk_bytenr = struct.unpack_from('<Q', data, pos+21)[0]
+            disk_num_bytes = struct.unpack_from('<Q', data, pos+29)[0]
+            offset = struct.unpack_from('<Q', data, pos+37)[0]
+            num_bytes = struct.unpack_from('<Q', data, pos+45)[0]
+        else:
+            # Inline extent or insufficient data
+            disk_bytenr = 0
+            disk_num_bytes = 0
+            offset = 0
+            num_bytes = ram_bytes
+
+        return cls(generation, ram_bytes, compression, encryption, other, type_,
+                   disk_bytenr, disk_num_bytes, offset, num_bytes)
+
+
+@dataclass
 class BtrfsDirItem:
     """Variable length - directory entry."""
     location: BtrfsKey    # 17 bytes - key of target inode

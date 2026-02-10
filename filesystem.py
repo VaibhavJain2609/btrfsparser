@@ -3,29 +3,23 @@ BTRFS Filesystem Parser - Extract files and directories from filesystem tree.
 """
 import struct
 import stat
-<<<<<<< HEAD
-<<<<<<< HEAD
 import hashlib
 from typing import Dict, List, Optional, BinaryIO
 from dataclasses import dataclass, field
 
 from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock, BtrfsFileExtentItem
 from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode, parse_inode_flags
-=======
 from typing import Dict, List, Optional, BinaryIO
 from dataclasses import dataclass, field
 
 from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock
 from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode
->>>>>>> f40cb6e (initial commit)
-=======
 import hashlib
 from typing import Dict, List, Optional, BinaryIO
 from dataclasses import dataclass, field
 
 from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock, BtrfsFileExtentItem
 from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode, parse_inode_flags
->>>>>>> 286cf09 (feat: added hashing)
 from chunk import ChunkMap
 from btree import traverse_tree_all
 
@@ -48,10 +42,6 @@ class FileEntry:
     ctime: str
     otime: str            # creation time
     parent_inode: Optional[int] = None
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 286cf09 (feat: added hashing)
     # Phase 1: Already parsed data
     generation: Optional[int] = None          # Transaction ID when created
     transid: Optional[int] = None             # Last modification transaction
@@ -71,11 +61,6 @@ class FileEntry:
     # Cryptographic hashes
     md5: Optional[str] = None                 # MD5 hash of file contents
     sha256: Optional[str] = None              # SHA256 hash of file contents
-<<<<<<< HEAD
-=======
->>>>>>> f40cb6e (initial commit)
-=======
->>>>>>> 286cf09 (feat: added hashing)
 
 
 @dataclass
@@ -86,18 +71,12 @@ class FileSystem:
     parents: Dict[int, int] = field(default_factory=dict)         # inode -> parent_inode
     children: Dict[int, List[int]] = field(default_factory=dict)  # inode -> [child_inodes]
     dir_entries: Dict[int, List[BtrfsDirItem]] = field(default_factory=dict)
-<<<<<<< HEAD
-<<<<<<< HEAD
     xattrs: Dict[int, List[tuple]] = field(default_factory=dict)  # inode -> [(name, value)]
     extents: Dict[int, List[tuple]] = field(default_factory=dict) # inode -> [(file_offset, disk_bytenr, disk_bytes, compression)]
     checksums: Dict[int, int] = field(default_factory=dict)       # logical_offset -> checksum_count
-=======
->>>>>>> f40cb6e (initial commit)
-=======
     xattrs: Dict[int, List[tuple]] = field(default_factory=dict)  # inode -> [(name, value)]
     extents: Dict[int, List[tuple]] = field(default_factory=dict) # inode -> [(file_offset, disk_bytenr, disk_bytes, compression)]
     checksums: Dict[int, int] = field(default_factory=dict)       # logical_offset -> checksum_count
->>>>>>> 286cf09 (feat: added hashing)
 
 
 def find_fs_tree_root(f: BinaryIO, sb: BtrfsSuperblock,
@@ -121,10 +100,6 @@ def find_fs_tree_root(f: BinaryIO, sb: BtrfsSuperblock,
     raise ValueError("Filesystem tree root not found")
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 286cf09 (feat: added hashing)
 def find_csum_tree_root(f: BinaryIO, sb: BtrfsSuperblock,
                         chunk_map: ChunkMap) -> Optional[int]:
     """
@@ -186,11 +161,6 @@ def parse_checksum_tree(f: BinaryIO, sb: BtrfsSuperblock,
     return checksums
 
 
-<<<<<<< HEAD
-=======
->>>>>>> f40cb6e (initial commit)
-=======
->>>>>>> 286cf09 (feat: added hashing)
 def find_all_subvolumes(f: BinaryIO, sb: BtrfsSuperblock,
                         chunk_map: ChunkMap) -> List[tuple]:
     """
@@ -268,10 +238,6 @@ def parse_all_subvolumes(f: BinaryIO, sb: BtrfsSuperblock,
                     unique_parent = (objectid << 48) | parent
                     combined_fs.parents[unique_inode] = unique_parent
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 286cf09 (feat: added hashing)
                 # Update extents with unique_inode key
                 if inode in fs.extents:
                     combined_fs.extents[unique_inode] = fs.extents[inode]
@@ -280,11 +246,6 @@ def parse_all_subvolumes(f: BinaryIO, sb: BtrfsSuperblock,
                 if inode in fs.xattrs:
                     combined_fs.xattrs[unique_inode] = fs.xattrs[inode]
 
-<<<<<<< HEAD
-=======
->>>>>>> f40cb6e (initial commit)
-=======
->>>>>>> 286cf09 (feat: added hashing)
             # Store subvolume root info
             # The root inode (256) of each subvolume
             root_inode = (objectid << 48) | 256
@@ -343,10 +304,6 @@ def parse_filesystem(f: BinaryIO, fs_tree_root: int,
                         fs.dir_entries[objectid] = []
                     fs.dir_entries[objectid].append(dir_item)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 286cf09 (feat: added hashing)
             elif item_type == BTRFS_TYPE.XATTR_ITEM:
                 # Parse extended attribute (reuses DIR_ITEM structure)
                 if len(data) >= 30:
@@ -372,11 +329,6 @@ def parse_filesystem(f: BinaryIO, fs_tree_root: int,
                         extent.compression
                     ))
 
-<<<<<<< HEAD
-=======
->>>>>>> f40cb6e (initial commit)
-=======
->>>>>>> 286cf09 (feat: added hashing)
         except Exception:
             # Skip malformed items
             continue
@@ -447,10 +399,6 @@ def get_file_type(mode: int) -> str:
         return 'unknown'
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 286cf09 (feat: added hashing)
 def read_file_data(f: BinaryIO, extents: List[tuple], chunk_map: ChunkMap,
                    max_size: int = 0) -> bytes:
     """
@@ -526,7 +474,6 @@ def calculate_hashes(data: bytes) -> tuple:
 
 def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
                   disk_file: Optional[BinaryIO] = None) -> List[FileEntry]:
-<<<<<<< HEAD
     """Convert parsed filesystem to list of FileEntry objects."""
     entries = []
 
@@ -559,46 +506,6 @@ def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
 
         return total_checksums
 
-=======
-def extract_files(fs: FileSystem) -> List[FileEntry]:
-    """Convert parsed filesystem to list of FileEntry objects."""
-    entries = []
-
->>>>>>> f40cb6e (initial commit)
-=======
-    """Convert parsed filesystem to list of FileEntry objects."""
-    entries = []
-
-    # Helper function to count checksums for a file's extents
-    def count_checksums(unique_inode: int) -> int:
-        """Count how many checksums cover this file's extents."""
-        if unique_inode not in fs.extents or not fs.checksums:
-            return 0
-
-        total_checksums = 0
-        for file_offset, disk_bytenr, disk_bytes, compression in fs.extents[unique_inode]:
-            if disk_bytenr == 0:  # Skip holes/sparse extents
-                continue
-
-            # Find checksums that overlap with this extent
-            # Checksums are indexed by logical offset (disk_bytenr)
-            for csum_start, csum_count in fs.checksums.items():
-                csum_end = csum_start + (csum_count * 4096)  # Assume 4K per checksum
-                extent_end = disk_bytenr + disk_bytes
-
-                # Check if ranges overlap
-                if disk_bytenr < csum_end and extent_end > csum_start:
-                    # Calculate overlap
-                    overlap_start = max(disk_bytenr, csum_start)
-                    overlap_end = min(extent_end, csum_end)
-                    overlap_bytes = overlap_end - overlap_start
-                    if overlap_bytes > 0:
-                        # Count checksums in overlap (one per 4K block)
-                        total_checksums += (overlap_bytes + 4095) // 4096
-
-        return total_checksums
-
->>>>>>> 286cf09 (feat: added hashing)
     for unique_inode, inode_item in fs.inodes.items():
         # Extract original inode (lower 48 bits) and subvolume id (upper 16 bits)
         original_inode = unique_inode & 0xFFFFFFFFFFFF
@@ -629,10 +536,6 @@ def extract_files(fs: FileSystem) -> List[FileEntry]:
                 mtime=inode_item.mtime.to_iso(),
                 ctime=inode_item.ctime.to_iso(),
                 otime=inode_item.otime.to_iso(),
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 286cf09 (feat: added hashing)
                 parent_inode=fs.parents.get(unique_inode),
                 # Phase 1: Already parsed data
                 generation=inode_item.generation,
@@ -650,7 +553,6 @@ def extract_files(fs: FileSystem) -> List[FileEntry]:
                 physical_offset=None,
                 # Phase 4: Checksum count
                 checksum_count=count_checksums(unique_inode)
-<<<<<<< HEAD
             )
 
             # Calculate physical offset if we have extents and chunk_map
@@ -677,38 +579,6 @@ def extract_files(fs: FileSystem) -> List[FileEntry]:
                     # Skip files that fail to read
                     pass
 
-=======
-                parent_inode=fs.parents.get(unique_inode)
-            )
->>>>>>> f40cb6e (initial commit)
-=======
-            )
-
-            # Calculate physical offset if we have extents and chunk_map
-            if chunk_map and unique_inode in fs.extents and fs.extents[unique_inode]:
-                first_extent = fs.extents[unique_inode][0]
-                logical_addr = first_extent[1]  # disk_bytenr
-                if logical_addr > 0:  # Skip holes/sparse extents
-                    physical_offset = chunk_map.logical_to_physical(logical_addr)
-                    if physical_offset:
-                        entry.physical_offset = physical_offset
-
-            # Calculate MD5/SHA256 hashes for regular files
-            if (file_type == 'file' and disk_file and chunk_map and
-                unique_inode in fs.extents and inode_item.size > 0):
-                try:
-                    # Read file data (limit to actual file size)
-                    file_data = read_file_data(disk_file, fs.extents[unique_inode],
-                                              chunk_map, inode_item.size)
-                    # Calculate hashes
-                    md5_hash, sha256_hash = calculate_hashes(file_data)
-                    entry.md5 = md5_hash
-                    entry.sha256 = sha256_hash
-                except Exception:
-                    # Skip files that fail to read
-                    pass
-
->>>>>>> 286cf09 (feat: added hashing)
             entries.append(entry)
         except Exception:
             # Skip entries that fail to convert

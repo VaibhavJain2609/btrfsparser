@@ -16,18 +16,9 @@ import sys
 
 from superblock import read_superblock, print_superblock_info
 from chunk import parse_sys_chunk_array, read_chunk_tree, ChunkMap
-<<<<<<< HEAD
-<<<<<<< HEAD
 from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes, parse_checksum_tree
 from output import to_json, to_csv, to_console, to_tree
 from statistics import calculate_statistics, write_statistics_json
-=======
-from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes
-=======
-from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes, parse_checksum_tree
->>>>>>> 286cf09 (feat: added hashing)
-from output import to_json, to_csv, to_console, to_tree
->>>>>>> f40cb6e (initial commit)
 
 
 def parse_offset(value: str) -> int:
@@ -42,14 +33,8 @@ def parse_offset(value: str) -> int:
         return int(value)
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-def derive_stats_filename(image_path: str) -> str:
-    """Generate statistics filename from image path.
-=======
 def derive_stats_filename(file_path: str) -> str:
     """Generate statistics filename from a given file path.
->>>>>>> 5e7fe03 (working stats)
 
     Args:
         file_path: Path to image or output file
@@ -68,8 +53,6 @@ def derive_stats_filename(file_path: str) -> str:
     return str(p.parent / stats_filename)
 
 
-=======
->>>>>>> f40cb6e (initial commit)
 def main():
     parser = argparse.ArgumentParser(
         description='Parse BTRFS filesystem from image file',
@@ -94,15 +77,7 @@ Offset formats:
 
     parser.add_argument('image', help='Path to BTRFS image file (.img)')
     parser.add_argument('-p', '--partition-offset',
-<<<<<<< HEAD
-<<<<<<< HEAD
                         type=str, default='4198400s',
-=======
-                        type=str, default='0',
->>>>>>> f40cb6e (initial commit)
-=======
-                        type=str, default='4198400s',
->>>>>>> 286cf09 (feat: added hashing)
                         help='Partition start offset (sectors with "s" suffix, hex with "0x", or bytes)')
     parser.add_argument('-o', '--output',
                         choices=['console', 'json', 'csv', 'tree'],
@@ -112,14 +87,6 @@ Offset formats:
                         help='Output file path (default: stdout)')
     parser.add_argument('--info-only', action='store_true',
                         help='Only show superblock info, do not parse files')
-<<<<<<< HEAD
-<<<<<<< HEAD
-    parser.add_argument('--stats', action='store_true',
-                        help='Generate statistics JSON file (<image>_stats.json)')
-=======
->>>>>>> f40cb6e (initial commit)
-=======
->>>>>>> 5e7fe03 (working stats)
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose output')
 
@@ -192,10 +159,6 @@ Offset formats:
             if args.verbose:
                 print(f"  Found {len(fs.inodes)} total inodes", file=sys.stderr)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 286cf09 (feat: added hashing)
             # Step 4b: Parse checksum tree
             if args.verbose:
                 print("Parsing checksum tree...", file=sys.stderr)
@@ -205,35 +168,17 @@ Offset formats:
             if args.verbose:
                 print(f"  Found {len(fs.checksums)} checksum ranges", file=sys.stderr)
 
-<<<<<<< HEAD
         # Step 5: Extract file entries
         with open(args.image, 'rb') as f:
             entries = extract_files(fs, chunk_map, f)
-=======
-        # Step 5: Extract file entries
-        entries = extract_files(fs)
->>>>>>> f40cb6e (initial commit)
-=======
-        # Step 5: Extract file entries
-        with open(args.image, 'rb') as f:
-            entries = extract_files(fs, chunk_map, f)
->>>>>>> 286cf09 (feat: added hashing)
 
         if args.verbose:
             print(f"  Extracted {len(entries)} entries", file=sys.stderr)
             print(file=sys.stderr)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        # Step 5.5: Generate statistics if requested
-        if args.stats:
-            if args.verbose:
-                print("Calculating statistics...", file=sys.stderr)
-=======
         # Step 5.5: Generate statistics automatically
         if args.verbose:
             print("Calculating statistics...", file=sys.stderr)
->>>>>>> 5e7fe03 (working stats)
 
         stats = calculate_statistics(entries)
 
@@ -249,8 +194,6 @@ Offset formats:
             print(f"Statistics written to {stats_path}", file=sys.stderr)
             print(file=sys.stderr)
 
-=======
->>>>>>> f40cb6e (initial commit)
         # Step 6: Generate output
         if args.output == 'json':
             output = to_json(entries)

@@ -4,17 +4,7 @@ BTRFS Filesystem Parser - Extract files and directories from filesystem tree.
 import struct
 import stat
 import hashlib
-from typing import Dict, List, Optional, BinaryIO
-from dataclasses import dataclass, field
-
-from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock, BtrfsFileExtentItem
-from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode, parse_inode_flags
-from typing import Dict, List, Optional, BinaryIO
-from dataclasses import dataclass, field
-
-from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock
-from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode
-import hashlib
+import zlib
 from typing import Dict, List, Optional, BinaryIO
 from dataclasses import dataclass, field
 
@@ -22,6 +12,19 @@ from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock, BtrfsFileE
 from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode, parse_inode_flags
 from chunk import ChunkMap
 from btree import traverse_tree_all
+
+# Try to import compression modules (optional dependencies)
+try:
+    import zstandard as zstd
+    HAS_ZSTD = True
+except ImportError:
+    HAS_ZSTD = False
+
+try:
+    import lzo
+    HAS_LZO = True
+except ImportError:
+    HAS_LZO = False
 
 
 @dataclass
@@ -42,6 +45,8 @@ class FileEntry:
     ctime: str
     otime: str            # creation time
     parent_inode: Optional[int] = None
+    uid_name: Optional[str] = None  # Resolved username from /etc/passwd
+    gid_name: Optional[str] = None  # Resolved group name from /etc/group
     # Phase 1: Already parsed data
     generation: Optional[int] = None          # Transaction ID when created
     transid: Optional[int] = None             # Last modification transaction
@@ -320,13 +325,22 @@ def parse_filesystem(f: BinaryIO, fs_tree_root: int,
                     extent = BtrfsFileExtentItem.unpack(data)
                     if objectid not in fs.extents:
                         fs.extents[objectid] = []
+
+                    # For inline extents (type=0), extract the inline data
+                    inline_data = None
+                    if extent.type == 0 and len(data) > 21:
+                        # Inline data starts after fixed header (21 bytes)
+                        inline_data = data[21:]
+
                     # key.offset = file offset
-                    # Store: (file_offset, disk_bytenr, disk_num_bytes, compression)
+                    # Store: (file_offset, disk_bytenr, disk_num_bytes, compression, extent_type, inline_data)
                     fs.extents[objectid].append((
                         item.key.offset,
                         extent.disk_bytenr,
                         extent.disk_num_bytes,
-                        extent.compression
+                        extent.compression,
+                        extent.type,
+                        inline_data
                     ))
 
         except Exception:
@@ -406,7 +420,7 @@ def read_file_data(f: BinaryIO, extents: List[tuple], chunk_map: ChunkMap,
 
     Args:
         f: Open file handle to disk image
-        extents: List of (file_offset, disk_bytenr, disk_num_bytes, compression)
+        extents: List of (file_offset, disk_bytenr, disk_num_bytes, compression, extent_type, inline_data)
         chunk_map: ChunkMap for logical->physical translation
         max_size: Maximum bytes to read (0 = read all)
 
@@ -421,8 +435,26 @@ def read_file_data(f: BinaryIO, extents: List[tuple], chunk_map: ChunkMap,
 
     file_data = bytearray()
 
-    for file_offset, disk_bytenr, disk_num_bytes, compression in sorted_extents:
-        # Skip holes (sparse regions)
+    for extent_info in sorted_extents:
+        # Unpack extent (handle both old and new formats)
+        if len(extent_info) == 6:
+            file_offset, disk_bytenr, disk_num_bytes, compression, extent_type, inline_data = extent_info
+        else:
+            # Old format compatibility
+            file_offset, disk_bytenr, disk_num_bytes, compression = extent_info
+            extent_type = 1  # Assume regular extent
+            inline_data = None
+
+        # Handle inline extents (type=0)
+        if extent_type == 0 and inline_data:
+            # Inline data is embedded in the extent item
+            # Decompress if needed
+            decompressed = decompress_data(inline_data, compression)
+            if decompressed:
+                file_data.extend(decompressed)
+            continue
+
+        # Skip holes (sparse regions) for regular extents
         if disk_bytenr == 0:
             # Fill with zeros for hole
             file_data.extend(b'\x00' * disk_num_bytes)
@@ -456,6 +488,50 @@ def read_file_data(f: BinaryIO, extents: List[tuple], chunk_map: ChunkMap,
     return bytes(file_data)
 
 
+def decompress_data(data: bytes, compression: int) -> Optional[bytes]:
+    """
+    Decompress BTRFS compressed data.
+
+    Args:
+        data: Compressed data bytes
+        compression: Compression type (0=none, 1=zlib, 2=lzo, 3=zstd)
+
+    Returns:
+        Decompressed data bytes, or None if decompression failed or not supported
+    """
+    if compression == 0:
+        # No compression
+        return data
+
+    elif compression == 1:
+        # ZLIB compression
+        try:
+            return zlib.decompress(data)
+        except Exception:
+            return None
+
+    elif compression == 2:
+        # LZO compression
+        if not HAS_LZO:
+            return None
+        try:
+            return lzo.decompress(data)
+        except Exception:
+            return None
+
+    elif compression == 3:
+        # ZSTD compression
+        if not HAS_ZSTD:
+            return None
+        try:
+            dctx = zstd.ZstdDecompressor()
+            return dctx.decompress(data)
+        except Exception:
+            return None
+
+    return None
+
+
 def calculate_hashes(data: bytes) -> tuple:
     """
     Calculate MD5 and SHA256 hashes for data.
@@ -472,10 +548,148 @@ def calculate_hashes(data: bytes) -> tuple:
     return (md5_hash, sha256_hash)
 
 
+def parse_passwd_data(data: bytes) -> Dict[int, str]:
+    """
+    Parse /etc/passwd format and return uid->username mapping.
+
+    Format: username:password:uid:gid:gecos:home:shell
+    Example: root:x:0:0:root:/root:/bin/bash
+
+    Args:
+        data: Contents of /etc/passwd file
+
+    Returns:
+        Dictionary mapping uid (int) -> username (str)
+    """
+    uid_map = {}
+
+    try:
+        text = data.decode('utf-8', errors='ignore')
+        for line in text.splitlines():
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+
+            parts = line.split(':')
+            if len(parts) >= 3:
+                username = parts[0]
+                try:
+                    uid = int(parts[2])
+                    uid_map[uid] = username
+                except (ValueError, IndexError):
+                    continue
+    except Exception:
+        pass
+
+    return uid_map
+
+
+def parse_group_data(data: bytes) -> Dict[int, str]:
+    """
+    Parse /etc/group format and return gid->groupname mapping.
+
+    Format: groupname:password:gid:members
+    Example: root:x:0:
+
+    Args:
+        data: Contents of /etc/group file
+
+    Returns:
+        Dictionary mapping gid (int) -> groupname (str)
+    """
+    gid_map = {}
+
+    try:
+        text = data.decode('utf-8', errors='ignore')
+        for line in text.splitlines():
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+
+            parts = line.split(':')
+            if len(parts) >= 3:
+                groupname = parts[0]
+                try:
+                    gid = int(parts[2])
+                    gid_map[gid] = groupname
+                except (ValueError, IndexError):
+                    continue
+    except Exception:
+        pass
+
+    return gid_map
+
+
+def resolve_names_from_filesystem(fs: FileSystem, chunk_map: Optional[ChunkMap],
+                                   disk_file: Optional[BinaryIO]) -> tuple:
+    """
+    Extract and parse /etc/passwd and /etc/group from the filesystem.
+
+    Searches multiple possible locations:
+    - /etc/passwd and /etc/group (standard Linux)
+    - /root/etc/passwd and /root/etc/group (alternative/embedded systems)
+
+    Args:
+        fs: Parsed FileSystem object
+        chunk_map: ChunkMap for logical->physical translation
+        disk_file: Open file handle to disk image
+
+    Returns:
+        Tuple of (uid_map, gid_map) where each is a dict mapping id->name
+    """
+    uid_map = {}
+    gid_map = {}
+
+    if not chunk_map or not disk_file:
+        return (uid_map, gid_map)
+
+    # Possible paths to search for passwd and group files
+    passwd_paths = ['/etc/passwd', '/root/etc/passwd']
+    group_paths = ['/etc/group', '/root/etc/group']
+
+    # Find passwd and group file inodes
+    passwd_inode = None
+    group_inode = None
+
+    for unique_inode, name in fs.names.items():
+        path = build_path(fs, unique_inode)
+
+        # Check all possible passwd locations
+        if path in passwd_paths and passwd_inode is None:
+            passwd_inode = unique_inode
+
+        # Check all possible group locations
+        if path in group_paths and group_inode is None:
+            group_inode = unique_inode
+
+    # Parse /etc/passwd (or /root/etc/passwd)
+    if passwd_inode and passwd_inode in fs.extents:
+        try:
+            passwd_data = read_file_data(disk_file, fs.extents[passwd_inode],
+                                        chunk_map, max_size=0)
+            uid_map = parse_passwd_data(passwd_data)
+        except Exception:
+            pass
+
+    # Parse /etc/group (or /root/etc/group)
+    if group_inode and group_inode in fs.extents:
+        try:
+            group_data = read_file_data(disk_file, fs.extents[group_inode],
+                                       chunk_map, max_size=0)
+            gid_map = parse_group_data(group_data)
+        except Exception:
+            pass
+
+    return (uid_map, gid_map)
+
+
 def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
                   disk_file: Optional[BinaryIO] = None) -> List[FileEntry]:
     """Convert parsed filesystem to list of FileEntry objects."""
     entries = []
+
+    # Resolve user and group names from /etc/passwd and /etc/group
+    uid_map, gid_map = resolve_names_from_filesystem(fs, chunk_map, disk_file)
 
     # Helper function to count checksums for a file's extents
     def count_checksums(unique_inode: int) -> int:
@@ -484,8 +698,14 @@ def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
             return 0
 
         total_checksums = 0
-        for file_offset, disk_bytenr, disk_bytes, compression in fs.extents[unique_inode]:
-            if disk_bytenr == 0:  # Skip holes/sparse extents
+        for extent_info in fs.extents[unique_inode]:
+            # Unpack extent (handle both old and new formats)
+            if len(extent_info) == 6:
+                file_offset, disk_bytenr, disk_bytes, compression, extent_type, inline_data = extent_info
+            else:
+                file_offset, disk_bytenr, disk_bytes, compression = extent_info
+
+            if disk_bytenr == 0:  # Skip holes/sparse/inline extents
                 continue
 
             # Find checksums that overlap with this extent
@@ -537,6 +757,8 @@ def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
                 ctime=inode_item.ctime.to_iso(),
                 otime=inode_item.otime.to_iso(),
                 parent_inode=fs.parents.get(unique_inode),
+                uid_name=uid_map.get(inode_item.uid),
+                gid_name=gid_map.get(inode_item.gid),
                 # Phase 1: Already parsed data
                 generation=inode_item.generation,
                 transid=inode_item.transid,

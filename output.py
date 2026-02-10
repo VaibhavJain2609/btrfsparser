@@ -19,7 +19,7 @@ def to_csv(entries: List[FileEntry]) -> str:
     """Convert file entries to CSV string."""
     output = StringIO()
     fieldnames = ['path', 'name', 'type', 'size', 'mode_str',
-                  'uid', 'gid', 'nlink',
+                  'uid', 'uid_name', 'gid', 'gid_name', 'nlink',
                   'atime', 'mtime', 'ctime', 'otime',
                   'inode', 'subvolume_id',
                   'generation', 'transid', 'flags', 'flags_str',
@@ -38,7 +38,9 @@ def to_csv(entries: List[FileEntry]) -> str:
             'size': entry.size,
             'mode_str': entry.mode_str,
             'uid': entry.uid,
+            'uid_name': entry.uid_name,
             'gid': entry.gid,
+            'gid_name': entry.gid_name,
             'nlink': entry.nlink,
             'atime': entry.atime,
             'mtime': entry.mtime,
@@ -66,8 +68,8 @@ def to_csv(entries: List[FileEntry]) -> str:
 def to_console(entries: List[FileEntry]) -> str:
     """Format file entries for console display."""
     lines = []
-    lines.append(f"{'Mode':<12} {'UID':>5} {'GID':>5} {'Size':>12} {'Modified':<20} Path")
-    lines.append('-' * 80)
+    lines.append(f"{'Mode':<12} {'Owner':<20} {'Group':<20} {'Size':>12} {'Modified':<20} Path")
+    lines.append('-' * 100)
 
     for entry in entries:
         mtime_short = entry.mtime[:19] if entry.mtime else ''
@@ -76,8 +78,20 @@ def to_console(entries: List[FileEntry]) -> str:
         else:
             size_str = f"{entry.size:,}"
 
+        # Format owner as "uid (username)" or just "uid" if name unknown
+        if entry.uid_name:
+            owner_str = f"{entry.uid} ({entry.uid_name})"
+        else:
+            owner_str = str(entry.uid)
+
+        # Format group as "gid (groupname)" or just "gid" if name unknown
+        if entry.gid_name:
+            group_str = f"{entry.gid} ({entry.gid_name})"
+        else:
+            group_str = str(entry.gid)
+
         lines.append(
-            f"{entry.mode_str:<12} {entry.uid:>5} {entry.gid:>5} "
+            f"{entry.mode_str:<12} {owner_str:<20} {group_str:<20} "
             f"{size_str:>12} {mtime_short:<20} {entry.path}"
         )
 

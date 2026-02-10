@@ -53,9 +53,10 @@ def calculate_statistics(entries: List[FileEntry]) -> Dict[str, Any]:
     by_type = defaultdict(lambda: {"count": 0, "total_size_bytes": 0})
     by_uid = defaultdict(lambda: {
         "uid": None,
+        "uid_name": None,
         "count": 0,
         "total_size_bytes": 0,
-        "by_gid": defaultdict(lambda: {"gid": None, "count": 0, "total_size_bytes": 0})
+        "by_gid": defaultdict(lambda: {"gid": None, "gid_name": None, "count": 0, "total_size_bytes": 0})
     })
 
     # Single pass aggregation - O(n) complexity
@@ -74,11 +75,13 @@ def calculate_statistics(entries: List[FileEntry]) -> Dict[str, Any]:
         # By ownership (uid -> gid hierarchy)
         uid_key = f"uid_{entry.uid}"
         by_uid[uid_key]["uid"] = entry.uid
+        by_uid[uid_key]["uid_name"] = entry.uid_name
         by_uid[uid_key]["count"] += 1
         by_uid[uid_key]["total_size_bytes"] += size
 
         gid_key = f"gid_{entry.gid}"
         by_uid[uid_key]["by_gid"][gid_key]["gid"] = entry.gid
+        by_uid[uid_key]["by_gid"][gid_key]["gid_name"] = entry.gid_name
         by_uid[uid_key]["by_gid"][gid_key]["count"] += 1
         by_uid[uid_key]["by_gid"][gid_key]["total_size_bytes"] += size
 

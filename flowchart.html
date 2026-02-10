@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Btrfs Data Flow Architecture - Gradient Transition</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            max-width: 1400px;
+        }
+        
+        h1 {
+            color: #1e3c72;
+            margin-bottom: 50px;
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        
+        .row.top {
+            justify-content: flex-start;
+        }
+        
+        .row.bottom {
+            justify-content: flex-end;
+            margin-top: 0;
+        }
+        
+        .step {
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            min-width: 160px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .step:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Gradient transition from pink → purple → blue → cyan */
+        .step-1 {
+            background: linear-gradient(135deg, #d541e6 0%, #f5576c 100%);
+        }
+        
+        .step-2 {
+            background: linear-gradient(135deg, #c471ed 0%, #8b5cf6 100%);
+        }
+        
+        .step-3 {
+            background: linear-gradient(135deg, #8b5cf6 0%, #667eea 100%);
+        }
+        
+        .step-4 {
+            background: linear-gradient(135deg, #667eea 0%, #5b7ff5 100%);
+        }
+        
+        .step-5 {
+            background: linear-gradient(135deg, #5b7ff5 0%, #4f93ff 100%);
+        }
+        
+        .step-6 {
+            background: linear-gradient(135deg, #4f93ff 0%, #3da9fc 100%);
+        }
+        
+        .step-7 {
+            background: linear-gradient(135deg, #3da9fc 0%, #2bbfed 100%);
+        }
+        
+        .step-8 {
+            background: linear-gradient(135deg, #2bbfed 0%, #00f2fe 100%);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            background: white;
+            color: #667eea;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Horizontal arrows (right-facing) */
+        .arrow-right {
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+        
+        .arrow-right::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 12px solid #764ba2;
+        }
+        
+        /* Horizontal arrows (left-facing) */
+        .arrow-left {
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(270deg, #3da9fc 0%, #2bbfed 100%);
+            position: relative;
+        }
+        
+        .arrow-left::after {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 12px solid #3da9fc;
+        }
+        
+        /* Vertical connector */
+        .connector {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 105px;
+        }
+        
+        .arrow-down {
+            width: 3px;
+            height: 60px;
+            background: linear-gradient(180deg, #5b7ff5 0%, #4f93ff 100%);
+            position: relative;
+        }
+        
+        .arrow-down::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #4f93ff;
+        }
+        
+        .download-info {
+            text-align: center;
+            margin-top: 40px;
+            padding: 15px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            color: #667eea;
+            font-size: 14px;
+        }
+        
+        .color-legend {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(90deg, #f093fb 0%, #c471ed 16%, #8b5cf6 32%, #667eea 48%, #4f93ff 64%, #3da9fc 80%, #00f2fe 100%);
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>File Parser Architecture</h1>
+        <div class="flowchart">
+            <!-- Top Row: 1 → 2 → 3 → 4 -->
+            <div class="row top">
+                <div class="step step-1">
+                    <span class="step-number">1</span>
+                    Disk Image
+                </div>
+                <div class="arrow-right"></div>
+                
+                <div class="step step-2">
+                    <span class="step-number">2</span>
+                    Superblock Reader
+                </div>
+                <div class="arrow-right"></div>
+                
+                <div class="step step-3">
+                    <span class="step-number">3</span>
+                    Chunk Parser
+                </div>
+                <div class="arrow-right"></div>
+                
+                <div class="step step-4">
+                    <span class="step-number">4</span>
+                    B-Tree Traversal
+                </div>
+            </div>
+            
+            <!-- Vertical Connector -->
+            <div class="connector">
+                <div class="arrow-down"></div>
+            </div>
+            
+            <!-- Bottom Row: 8 ← 7 ← 6 ← 5 -->
+            <div class="row bottom">
+                <div class="step step-8">
+                    <span class="step-number">8</span>
+                    GUI / Reports
+                </div>
+                <div class="arrow-left"></div>
+                
+                <div class="step step-7">
+                    <span class="step-number">7</span>
+                    Output Formatter
+                </div>
+                <div class="arrow-left"></div>
+                
+                <div class="step step-6">
+                    <span class="step-number">6</span>
+                    Filesystem Builder
+                </div>
+                <div class="arrow-left"></div>
+                
+                <div class="step step-5">
+                    <span class="step-number">5</span>
+                    Item Parsing
+                </div>
+            </div>
+        </div>
+        
+        <div class="color-legend">
+            🎨 Color Gradient Progression: Pink (Start) → Purple → Blue → Cyan (End)
+        </div>
+        
+        <div class="download-info">
+            💡 Take a screenshot of this layout to use in your presentation slides
+        </div>
+    </div>
+</body>
+</html>

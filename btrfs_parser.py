@@ -18,6 +18,7 @@ from superblock import read_superblock, print_superblock_info
 from chunk import parse_sys_chunk_array, read_chunk_tree, ChunkMap
 from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes, parse_checksum_tree
 from output import to_json, to_csv, to_console, to_tree
+from statistics import calculate_statistics, write_statistics_json
 
 
 def parse_offset(value: str) -> int:
@@ -30,6 +31,19 @@ def parse_offset(value: str) -> int:
         return int(value, 16)
     else:
         return int(value)
+
+
+def derive_stats_filename(image_path: str) -> str:
+    """Generate statistics filename from image path.
+
+    Example:
+        /path/to/image.img -> /path/to/image_stats.json
+        disk.raw -> disk_stats.json
+    """
+    from pathlib import Path
+    p = Path(image_path)
+    stats_filename = f"{p.stem}_stats.json"
+    return str(p.parent / stats_filename)
 
 
 def main():
@@ -66,6 +80,8 @@ Offset formats:
                         help='Output file path (default: stdout)')
     parser.add_argument('--info-only', action='store_true',
                         help='Only show superblock info, do not parse files')
+    parser.add_argument('--stats', action='store_true',
+                        help='Generate statistics JSON file (<image>_stats.json)')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose output')
 
@@ -154,6 +170,19 @@ Offset formats:
         if args.verbose:
             print(f"  Extracted {len(entries)} entries", file=sys.stderr)
             print(file=sys.stderr)
+
+        # Step 5.5: Generate statistics if requested
+        if args.stats:
+            if args.verbose:
+                print("Calculating statistics...", file=sys.stderr)
+
+            stats = calculate_statistics(entries)
+            stats_path = derive_stats_filename(args.image)
+            write_statistics_json(stats, stats_path)
+
+            if args.verbose:
+                print(f"Statistics written to {stats_path}", file=sys.stderr)
+                print(file=sys.stderr)
 
         # Step 6: Generate output
         if args.output == 'json':

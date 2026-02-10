@@ -26,10 +26,17 @@ python btrfs_parser.py image.img -o tree          # tree view
 python btrfs_parser.py image.img --info-only
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Generate statistics
 python btrfs_parser.py image.img --stats              # Creates image_stats.json
 python btrfs_parser.py image.img --stats -v           # With verbose output
 python btrfs_parser.py image.img -o json --stats      # Both JSON output + stats
+=======
+# Statistics generation
+# Note: Statistics are automatically generated for every parse
+python btrfs_parser.py image.img                      # Creates image_stats.json (in image directory)
+python btrfs_parser.py image.img -o json -f out.json  # Creates out_stats.json (in same dir as out.json)
+>>>>>>> 5e7fe03 (working stats)
 
 =======
 >>>>>>> 286cf09 (feat: added hashing)
@@ -74,6 +81,10 @@ btrfs_parser.py   # CLI entry point, orchestrates the parsing pipeline
 3. **Root Tree**: Traverse to find ROOT_ITEM entries for subvolumes
 4. **Filesystem Trees**: Parse INODE_ITEM, INODE_REF, DIR_ITEM from each subvolume tree
 5. **Path Building**: Walk parent chain to construct full paths
+6. **Statistics Generation** (`statistics.py`): Automatically calculates and exports statistics
+   - Saved as `<output_file>_stats.json` (if `-f` specified) or `<image>_stats.json` (if output to stdout)
+   - Categories: by file extension, by BTRFS type, by ownership (uid/gid)
+   - Metrics: file count and total size in bytes
 
 ### Key Data Structures
 

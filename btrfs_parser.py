@@ -43,15 +43,27 @@ def parse_offset(value: str) -> int:
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 def derive_stats_filename(image_path: str) -> str:
     """Generate statistics filename from image path.
+=======
+def derive_stats_filename(file_path: str) -> str:
+    """Generate statistics filename from a given file path.
+>>>>>>> 5e7fe03 (working stats)
 
-    Example:
+    Args:
+        file_path: Path to image or output file
+
+    Returns:
+        Path to statistics file in same directory
+
+    Examples:
         /path/to/image.img -> /path/to/image_stats.json
-        disk.raw -> disk_stats.json
+        output.json -> output_stats.json
+        /path/to/output.json -> /path/to/output_stats.json
     """
     from pathlib import Path
-    p = Path(image_path)
+    p = Path(file_path)
     stats_filename = f"{p.stem}_stats.json"
     return str(p.parent / stats_filename)
 
@@ -101,10 +113,13 @@ Offset formats:
     parser.add_argument('--info-only', action='store_true',
                         help='Only show superblock info, do not parse files')
 <<<<<<< HEAD
+<<<<<<< HEAD
     parser.add_argument('--stats', action='store_true',
                         help='Generate statistics JSON file (<image>_stats.json)')
 =======
 >>>>>>> f40cb6e (initial commit)
+=======
+>>>>>>> 5e7fe03 (working stats)
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose output')
 
@@ -209,18 +224,30 @@ Offset formats:
             print(file=sys.stderr)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         # Step 5.5: Generate statistics if requested
         if args.stats:
             if args.verbose:
                 print("Calculating statistics...", file=sys.stderr)
+=======
+        # Step 5.5: Generate statistics automatically
+        if args.verbose:
+            print("Calculating statistics...", file=sys.stderr)
+>>>>>>> 5e7fe03 (working stats)
 
-            stats = calculate_statistics(entries)
+        stats = calculate_statistics(entries)
+
+        # Save statistics in same directory as output file if specified, otherwise same as image
+        if args.file:
+            stats_path = derive_stats_filename(args.file)
+        else:
             stats_path = derive_stats_filename(args.image)
-            write_statistics_json(stats, stats_path)
 
-            if args.verbose:
-                print(f"Statistics written to {stats_path}", file=sys.stderr)
-                print(file=sys.stderr)
+        write_statistics_json(stats, stats_path)
+
+        if args.verbose:
+            print(f"Statistics written to {stats_path}", file=sys.stderr)
+            print(file=sys.stderr)
 
 =======
 >>>>>>> f40cb6e (initial commit)

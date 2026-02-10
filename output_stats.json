@@ -1,0 +1,3912 @@
+{
+  "summary": {
+    "total_files": 136868,
+    "total_size_bytes": 6161186426,
+    "total_directories": 13521,
+    "total_symlinks": 21577,
+    "unique_extensions": 915,
+    "unique_owners": 12
+  },
+  "by_extension": {
+    "(directory)": {
+      "count": 13521,
+      "total_size_bytes": 5620374
+    },
+    "(no extension)": {
+      "count": 20727,
+      "total_size_bytes": 860093502
+    },
+    ".lock": {
+      "count": 8,
+      "total_size_bytes": 3747
+    },
+    ".lightbgcolor": {
+      "count": 1,
+      "total_size_bytes": 6059
+    },
+    ".xml": {
+      "count": 5124,
+      "total_size_bytes": 161129792
+    },
+    ".conf": {
+      "count": 1965,
+      "total_size_bytes": 2803145
+    },
+    ".sh": {
+      "count": 396,
+      "total_size_bytes": 1089666
+    },
+    ".gz": {
+      "count": 11694,
+      "total_size_bytes": 68661936
+    },
+    ".x86_64": {
+      "count": 2,
+      "total_size_bytes": 103
+    },
+    ".deny": {
+      "count": 2,
+      "total_size_bytes": 1
+    },
+    ".rules": {
+      "count": 208,
+      "total_size_bytes": 417441
+    },
+    ".bash": {
+      "count": 9,
+      "total_size_bytes": 343823
+    },
+    ".bash_completion": {
+      "count": 1,
+      "total_size_bytes": 3185
+    },
+    ".blacklist": {
+      "count": 1,
+      "total_size_bytes": 535
+    },
+    ".key": {
+      "count": 21,
+      "total_size_bytes": 2072363
+    },
+    ".atb": {
+      "count": 3,
+      "total_size_bytes": 3036
+    },
+    ".ctb": {
+      "count": 187,
+      "total_size_bytes": 8202410
+    },
+    ".cti": {
+      "count": 66,
+      "total_size_bytes": 2458758
+    },
+    ".kti": {
+      "count": 120,
+      "total_size_bytes": 203701
+    },
+    ".ktb": {
+      "count": 143,
+      "total_size_bytes": 183479
+    },
+    ".txt": {
+      "count": 679,
+      "total_size_bytes": 65527324
+    },
+    ".tti": {
+      "count": 34,
+      "total_size_bytes": 194542
+    },
+    ".ttb": {
+      "count": 90,
+      "total_size_bytes": 486697
+    },
+    ".json": {
+      "count": 97,
+      "total_size_bytes": 1847485
+    },
+    ".yaml": {
+      "count": 36,
+      "total_size_bytes": 528313
+    },
+    ".config": {
+      "count": 68,
+      "total_size_bytes": 74768
+    },
+    ".pol": {
+      "count": 11,
+      "total_size_bytes": 35481
+    },
+    ".cshrc": {
+      "count": 1,
+      "total_size_bytes": 1401
+    },
+    ".login": {
+      "count": 1,
+      "total_size_bytes": 1569
+    },
+    ".default": {
+      "count": 3,
+      "total_size_bytes": 9661
+    },
+    ".certpath": {
+      "count": 1,
+      "total_size_bytes": 14
+    },
+    ".urls": {
+      "count": 9,
+      "total_size_bytes": 136
+    },
+    ".png": {
+      "count": 8598,
+      "total_size_bytes": 40551262
+    },
+    ".old": {
+      "count": 2,
+      "total_size_bytes": 10783
+    },
+    ".script": {
+      "count": 1,
+      "total_size_bytes": 209
+    },
+    ".md": {
+      "count": 745,
+      "total_size_bytes": 6951982
+    },
+    ".sample": {
+      "count": 24,
+      "total_size_bytes": 65168
+    },
+    ".local": {
+      "count": 6,
+      "total_size_bytes": 3304
+    },
+    ".cfg": {
+      "count": 29,
+      "total_size_bytes": 37004
+    },
+    ".issue": {
+      "count": 2,
+      "total_size_bytes": 93
+    },
+    ".net": {
+      "count": 2,
+      "total_size_bytes": 44
+    },
+    ".template": {
+      "count": 4,
+      "total_size_bytes": 15645
+    },
+    ".properties": {
+      "count": 7,
+      "total_size_bytes": 69915
+    },
+    ".access": {
+      "count": 1,
+      "total_size_bytes": 3997
+    },
+    ".security": {
+      "count": 1,
+      "total_size_bytes": 67419
+    },
+    ".policy": {
+      "count": 66,
+      "total_size_bytes": 1809616
+    },
+    ".certs": {
+      "count": 1,
+      "total_size_bytes": 2831
+    },
+    ".upstream": {
+      "count": 2,
+      "total_size_bytes": 238950
+    },
+    ".dat": {
+      "count": 54,
+      "total_size_bytes": 25870365
+    },
+    ".der": {
+      "count": 8,
+      "total_size_bytes": 3508
+    },
+    ".cache": {
+      "count": 10,
+      "total_size_bytes": 368352
+    },
+    ".driver": {
+      "count": 17,
+      "total_size_bytes": 226
+    },
+    ".defs": {
+      "count": 13,
+      "total_size_bytes": 104416
+    },
+    ".qemu": {
+      "count": 1,
+      "total_size_bytes": 540
+    },
+    ".logrotate": {
+      "count": 1,
+      "total_size_bytes": 106
+    },
+    ".profile": {
+      "count": 35,
+      "total_size_bytes": 111072
+    },
+    ".types": {
+      "count": 4,
+      "total_size_bytes": 87383
+    },
+    ".cnf": {
+      "count": 8,
+      "total_size_bytes": 13684
+    },
+    ".readme": {
+      "count": 2,
+      "total_size_bytes": 512
+    },
+    ".nft": {
+      "count": 7,
+      "total_size_bytes": 10004
+    },
+    ".os": {
+      "count": 1,
+      "total_size_bytes": 28884
+    },
+    ".bin": {
+      "count": 81,
+      "total_size_bytes": 35959691
+    },
+    ".crt": {
+      "count": 7,
+      "total_size_bytes": 676734
+    },
+    ".0": {
+      "count": 1895,
+      "total_size_bytes": 276949011
+    },
+    ".pem": {
+      "count": 156,
+      "total_size_bytes": 1112482
+    },
+    ".db": {
+      "count": 14,
+      "total_size_bytes": 30869038
+    },
+    ".ipv6to4": {
+      "count": 2,
+      "total_size_bytes": 9648
+    },
+    ".initscripts": {
+      "count": 2,
+      "total_size_bytes": 4409
+    },
+    ".csh": {
+      "count": 14,
+      "total_size_bytes": 11275
+    },
+    ".example": {
+      "count": 15,
+      "total_size_bytes": 51669
+    },
+    ".init": {
+      "count": 1,
+      "total_size_bytes": 1975
+    },
+    ".sha512": {
+      "count": 1,
+      "total_size_bytes": 129
+    },
+    ".subs_dist": {
+      "count": 2,
+      "total_size_bytes": 3495
+    },
+    ".homedirs": {
+      "count": 2,
+      "total_size_bytes": 32964
+    },
+    ".subs": {
+      "count": 1,
+      "total_size_bytes": 0
+    },
+    ".35": {
+      "count": 3,
+      "total_size_bytes": 18118191
+    },
+    ".org": {
+      "count": 2,
+      "total_size_bytes": 53
+    },
+    ".options": {
+      "count": 1,
+      "total_size_bytes": 76
+    },
+    ".service": {
+      "count": 810,
+      "total_size_bytes": 366169
+    },
+    ".target": {
+      "count": 142,
+      "total_size_bytes": 60620
+    },
+    ".path": {
+      "count": 8,
+      "total_size_bytes": 2462
+    },
+    ".socket": {
+      "count": 174,
+      "total_size_bytes": 48326
+    },
+    ".timer": {
+      "count": 28,
+      "total_size_bytes": 6615
+    },
+    ".subr": {
+      "count": 1,
+      "total_size_bytes": 1482
+    },
+    ".xsd": {
+      "count": 24,
+      "total_size_bytes": 315907
+    },
+    ".dtd": {
+      "count": 34,
+      "total_size_bytes": 320429
+    },
+    ".desktop": {
+      "count": 148,
+      "total_size_bytes": 1386143
+    },
+    ".menu": {
+      "count": 8,
+      "total_size_bytes": 17211
+    },
+    ".defaults": {
+      "count": 3,
+      "total_size_bytes": 998
+    },
+    ".repo": {
+      "count": 9,
+      "total_size_bytes": 8463
+    },
+    ".man-db": {
+      "count": 3,
+      "total_size_bytes": 168758
+    },
+    ".lua": {
+      "count": 66,
+      "total_size_bytes": 360452
+    },
+    ".tcl": {
+      "count": 20,
+      "total_size_bytes": 293300
+    },
+    ".cups": {
+      "count": 7,
+      "total_size_bytes": 152432
+    },
+    ".idmap": {
+      "count": 1,
+      "total_size_bytes": 19976
+    },
+    ".upcall": {
+      "count": 1,
+      "total_size_bytes": 40848
+    },
+    ".3": {
+      "count": 164,
+      "total_size_bytes": 193606503
+    },
+    ".f2fs": {
+      "count": 8,
+      "total_size_bytes": 300196
+    },
+    ".exfat": {
+      "count": 4,
+      "total_size_bytes": 169256
+    },
+    ".btrfs": {
+      "count": 2,
+      "total_size_bytes": 766413
+    },
+    ".cramfs": {
+      "count": 4,
+      "total_size_bytes": 66693
+    },
+    ".ext4": {
+      "count": 2,
+      "total_size_bytes": 505912
+    },
+    ".fat": {
+      "count": 2,
+      "total_size_bytes": 139680
+    },
+    ".hfs": {
+      "count": 1,
+      "total_size_bytes": 12
+    },
+    ".hfsplus": {
+      "count": 2,
+      "total_size_bytes": 333896
+    },
+    ".minix": {
+      "count": 4,
+      "total_size_bytes": 103623
+    },
+    ".msdos": {
+      "count": 2,
+      "total_size_bytes": 16
+    },
+    ".ntfs": {
+      "count": 3,
+      "total_size_bytes": 41
+    },
+    ".vfat": {
+      "count": 2,
+      "total_size_bytes": 16
+    },
+    ".xfs": {
+      "count": 2,
+      "total_size_bytes": 541786
+    },
+    ".0-64": {
+      "count": 1,
+      "total_size_bytes": 20072
+    },
+    ".dns_resolver": {
+      "count": 1,
+      "total_size_bytes": 28344
+    },
+    ".bfd": {
+      "count": 1,
+      "total_size_bytes": 1582000
+    },
+    ".so": {
+      "count": 2849,
+      "total_size_bytes": 877921140
+    },
+    ".py": {
+      "count": 4123,
+      "total_size_bytes": 46851137
+    },
+    ".nilfs2": {
+      "count": 3,
+      "total_size_bytes": 89064
+    },
+    ".udf": {
+      "count": 2,
+      "total_size_bytes": 5957
+    },
+    ".cifs": {
+      "count": 1,
+      "total_size_bytes": 53904
+    },
+    ".composefs": {
+      "count": 1,
+      "total_size_bytes": 15848
+    },
+    ".ddi": {
+      "count": 1,
+      "total_size_bytes": 22
+    },
+    ".fuse": {
+      "count": 1,
+      "total_size_bytes": 15872
+    },
+    ".fuse3": {
+      "count": 1,
+      "total_size_bytes": 24064
+    },
+    ".glusterfs": {
+      "count": 1,
+      "total_size_bytes": 24974
+    },
+    ".lowntfs-3g": {
+      "count": 1,
+      "total_size_bytes": 19
+    },
+    ".nfs": {
+      "count": 3,
+      "total_size_bytes": 104687
+    },
+    ".nfs4": {
+      "count": 2,
+      "total_size_bytes": 18
+    },
+    ".ntfs-3g": {
+      "count": 1,
+      "total_size_bytes": 16
+    },
+    ".ntfs-fuse": {
+      "count": 1,
+      "total_size_bytes": 13
+    },
+    ".smb3": {
+      "count": 1,
+      "total_size_bytes": 10
+    },
+    ".vboxsf": {
+      "count": 1,
+      "total_size_bytes": 504
+    },
+    ".probe": {
+      "count": 1,
+      "total_size_bytes": 11752
+    },
+    ".decibels": {
+      "count": 1,
+      "total_size_bytes": 609
+    },
+    ".avx2": {
+      "count": 2,
+      "total_size_bytes": 604752
+    },
+    ".x11": {
+      "count": 1,
+      "total_size_bytes": 6
+    },
+    ".14": {
+      "count": 9,
+      "total_size_bytes": 2611892
+    },
+    ".gssd": {
+      "count": 1,
+      "total_size_bytes": 90576
+    },
+    ".idmapd": {
+      "count": 1,
+      "total_size_bytes": 53320
+    },
+    ".mountd": {
+      "count": 1,
+      "total_size_bytes": 140120
+    },
+    ".nfsd": {
+      "count": 1,
+      "total_size_bytes": 37288
+    },
+    ".statd": {
+      "count": 1,
+      "total_size_bytes": 83120
+    },
+    ".groff": {
+      "count": 1,
+      "total_size_bytes": 36760
+    },
+    ".udisks2": {
+      "count": 1,
+      "total_size_bytes": 11744
+    },
+    ".h": {
+      "count": 28,
+      "total_size_bytes": 491001
+    },
+    ".1": {
+      "count": 550,
+      "total_size_bytes": 246200345
+    },
+    ".2": {
+      "count": 298,
+      "total_size_bytes": 169733133
+    },
+    ".4": {
+      "count": 100,
+      "total_size_bytes": 23704582
+    },
+    ".5": {
+      "count": 103,
+      "total_size_bytes": 98347237
+    },
+    ".6": {
+      "count": 137,
+      "total_size_bytes": 11151274
+    },
+    ".name": {
+      "count": 4,
+      "total_size_bytes": 1240
+    },
+    ".cgi": {
+      "count": 6,
+      "total_size_bytes": 315830
+    },
+    ".network": {
+      "count": 11,
+      "total_size_bytes": 7136
+    },
+    ".8": {
+      "count": 47,
+      "total_size_bytes": 3132323
+    },
+    ".adoc": {
+      "count": 836,
+      "total_size_bytes": 4825884
+    },
+    ".flatpakrepo": {
+      "count": 1,
+      "total_size_bytes": 4088
+    },
+    ".xz": {
+      "count": 9997,
+      "total_size_bytes": 548599889
+    },
+    ".fw": {
+      "count": 3,
+      "total_size_bytes": 10662
+    },
+    ".p7s": {
+      "count": 1,
+      "total_size_bytes": 1085
+    },
+    ".cache-9": {
+      "count": 33,
+      "total_size_bytes": 1021760
+    },
+    ".tag": {
+      "count": 2,
+      "total_size_bytes": 383
+    },
+    ".mod": {
+      "count": 852,
+      "total_size_bytes": 10522988
+    },
+    ".lst": {
+      "count": 37,
+      "total_size_bytes": 378168
+    },
+    ".exec": {
+      "count": 3,
+      "total_size_bytes": 1867124
+    },
+    ".img": {
+      "count": 13,
+      "total_size_bytes": 2503878
+    },
+    ".image": {
+      "count": 1,
+      "total_size_bytes": 2552
+    },
+    ".jfc": {
+      "count": 2,
+      "total_size_bytes": 80889
+    },
+    ".jar": {
+      "count": 33,
+      "total_size_bytes": 15387311
+    },
+    ".ja": {
+      "count": 4,
+      "total_size_bytes": 82932754
+    },
+    ".jsa": {
+      "count": 4,
+      "total_size_bytes": 64536576
+    },
+    ".12x22": {
+      "count": 1,
+      "total_size_bytes": 178
+    },
+    ".arabic": {
+      "count": 1,
+      "total_size_bytes": 256
+    },
+    ".cyrillic": {
+      "count": 1,
+      "total_size_bytes": 1846
+    },
+    ".ethiopic": {
+      "count": 1,
+      "total_size_bytes": 889
+    },
+    ".greek": {
+      "count": 1,
+      "total_size_bytes": 868
+    },
+    ".hebrew": {
+      "count": 1,
+      "total_size_bytes": 130
+    },
+    ".lat2-terminus16": {
+      "count": 1,
+      "total_size_bytes": 11134
+    },
+    ".latgrkcyr": {
+      "count": 1,
+      "total_size_bytes": 3863
+    },
+    ".sun": {
+      "count": 1,
+      "total_size_bytes": 1159
+    },
+    ".cp1250": {
+      "count": 1,
+      "total_size_bytes": 333
+    },
+    ".cybercafe": {
+      "count": 1,
+      "total_size_bytes": 917
+    },
+    ".drdos": {
+      "count": 1,
+      "total_size_bytes": 202
+    },
+    ".eurlatgr": {
+      "count": 1,
+      "total_size_bytes": 53627
+    },
+    ".mappings": {
+      "count": 1,
+      "total_size_bytes": 7811
+    },
+    ".lat0": {
+      "count": 1,
+      "total_size_bytes": 449
+    },
+    ".lat7": {
+      "count": 1,
+      "total_size_bytes": 376
+    },
+    ".lat9": {
+      "count": 1,
+      "total_size_bytes": 3143
+    },
+    ".psfu": {
+      "count": 1,
+      "total_size_bytes": 326
+    },
+    ".trans": {
+      "count": 41,
+      "total_size_bytes": 323404
+    },
+    ".inc": {
+      "count": 17,
+      "total_size_bytes": 24713
+    },
+    ".m4": {
+      "count": 2,
+      "total_size_bytes": 25285
+    },
+    ".doc": {
+      "count": 1,
+      "total_size_bytes": 1714
+    },
+    ".8859_7": {
+      "count": 1,
+      "total_size_bytes": 517
+    },
+    ".8859_8": {
+      "count": 1,
+      "total_size_bytes": 23
+    },
+    ".latin": {
+      "count": 1,
+      "total_size_bytes": 6030
+    },
+    ".latin1": {
+      "count": 2,
+      "total_size_bytes": 12291
+    },
+    ".latin2": {
+      "count": 1,
+      "total_size_bytes": 3465
+    },
+    ".latin3": {
+      "count": 1,
+      "total_size_bytes": 2037
+    },
+    ".latin4": {
+      "count": 1,
+      "total_size_bytes": 2897
+    },
+    ".uni": {
+      "count": 63,
+      "total_size_bytes": 222036
+    },
+    ".install": {
+      "count": 13,
+      "total_size_bytes": 42229
+    },
+    ".real": {
+      "count": 1,
+      "total_size_bytes": 233242544
+    },
+    ".hmac": {
+      "count": 14,
+      "total_size_bytes": 1345
+    },
+    ".map": {
+      "count": 10,
+      "total_size_bytes": 17085158
+    },
+    ".alias": {
+      "count": 4,
+      "total_size_bytes": 1478773
+    },
+    ".block": {
+      "count": 1,
+      "total_size_bytes": 1572
+    },
+    ".builtin": {
+      "count": 1,
+      "total_size_bytes": 11159
+    },
+    ".modinfo": {
+      "count": 1,
+      "total_size_bytes": 104349
+    },
+    ".dep": {
+      "count": 1,
+      "total_size_bytes": 660592
+    },
+    ".devname": {
+      "count": 1,
+      "total_size_bytes": 375
+    },
+    ".drm": {
+      "count": 1,
+      "total_size_bytes": 303
+    },
+    ".modesetting": {
+      "count": 1,
+      "total_size_bytes": 34
+    },
+    ".networking": {
+      "count": 1,
+      "total_size_bytes": 2864
+    },
+    ".order": {
+      "count": 1,
+      "total_size_bytes": 199798
+    },
+    ".softdep": {
+      "count": 1,
+      "total_size_bytes": 1372
+    },
+    ".symbols": {
+      "count": 2,
+      "total_size_bytes": 679303
+    },
+    ".weakdep": {
+      "count": 1,
+      "total_size_bytes": 55
+    },
+    ".pcrlock": {
+      "count": 16,
+      "total_size_bytes": 86363
+    },
+    ".pyc": {
+      "count": 4904,
+      "total_size_bytes": 82887685
+    },
+    ".pth": {
+      "count": 2,
+      "total_size_bytes": 182
+    },
+    ".typed": {
+      "count": 37,
+      "total_size_bytes": 126
+    },
+    ".rst": {
+      "count": 183,
+      "total_size_bytes": 2352606
+    },
+    ".pyi": {
+      "count": 41,
+      "total_size_bytes": 727601
+    },
+    ".html": {
+      "count": 868,
+      "total_size_bytes": 29372865
+    },
+    ".mo": {
+      "count": 13670,
+      "total_size_bytes": 455515527
+    },
+    ".rng": {
+      "count": 48,
+      "total_size_bytes": 568104
+    },
+    ".apache": {
+      "count": 5,
+      "total_size_bytes": 52054
+    },
+    ".bsd": {
+      "count": 9,
+      "total_size_bytes": 12514
+    },
+    ".tmpl": {
+      "count": 531,
+      "total_size_bytes": 452884
+    },
+    ".apache2": {
+      "count": 1,
+      "total_size_bytes": 11358
+    },
+    ".mit": {
+      "count": 3,
+      "total_size_bytes": 3154
+    },
+    ".js": {
+      "count": 225,
+      "total_size_bytes": 1410952
+    },
+    ".attr": {
+      "count": 2,
+      "total_size_bytes": 274
+    },
+    ".prov": {
+      "count": 2,
+      "total_size_bytes": 8704
+    },
+    ".color": {
+      "count": 1,
+      "total_size_bytes": 151
+    },
+    ".dist": {
+      "count": 5,
+      "total_size_bytes": 94394
+    },
+    ".firewalld": {
+      "count": 1,
+      "total_size_bytes": 239
+    },
+    ".javapackages-filesystem": {
+      "count": 1,
+      "total_size_bytes": 2063
+    },
+    ".pam": {
+      "count": 1,
+      "total_size_bytes": 179
+    },
+    ".pkgconf": {
+      "count": 1,
+      "total_size_bytes": 61
+    },
+    ".qt5-qtbase": {
+      "count": 1,
+      "total_size_bytes": 78
+    },
+    ".qt6-qtbase": {
+      "count": 1,
+      "total_size_bytes": 74
+    },
+    ".selinux-policy": {
+      "count": 1,
+      "total_size_bytes": 7311
+    },
+    ".transaction_audit": {
+      "count": 1,
+      "total_size_bytes": 56
+    },
+    ".transaction_selinux": {
+      "count": 1,
+      "total_size_bytes": 58
+    },
+    ".transaction_systemd_inhibit": {
+      "count": 1,
+      "total_size_bytes": 66
+    },
+    ".daily": {
+      "count": 2,
+      "total_size_bytes": 296
+    },
+    ".log": {
+      "count": 8,
+      "total_size_bytes": 3649521
+    },
+    ".supp": {
+      "count": 1,
+      "total_size_bytes": 688
+    },
+    ".swidtag": {
+      "count": 2,
+      "total_size_bytes": 1768
+    },
+    ".toml": {
+      "count": 8,
+      "total_size_bytes": 269863
+    },
+    ".sqlite": {
+      "count": 2,
+      "total_size_bytes": 92540928
+    },
+    ".sqlite-shm": {
+      "count": 2,
+      "total_size_bytes": 65536
+    },
+    ".sqlite-wal": {
+      "count": 2,
+      "total_size_bytes": 791072
+    },
+    ".catalog": {
+      "count": 24,
+      "total_size_bytes": 293309
+    },
+    ".pgp": {
+      "count": 1,
+      "total_size_bytes": 46992
+    },
+    ".preset": {
+      "count": 11,
+      "total_size_bytes": 21401
+    },
+    ".link": {
+      "count": 9,
+      "total_size_bytes": 5476
+    },
+    ".list": {
+      "count": 8,
+      "total_size_bytes": 31947
+    },
+    ".shutdown": {
+      "count": 2,
+      "total_size_bytes": 423
+    },
+    ".slice": {
+      "count": 11,
+      "total_size_bytes": 4342
+    },
+    ".mount": {
+      "count": 47,
+      "total_size_bytes": 10859
+    },
+    ".automount": {
+      "count": 2,
+      "total_size_bytes": 796
+    },
+    ".hwdb": {
+      "count": 41,
+      "total_size_bytes": 9904573
+    },
+    ".la": {
+      "count": 133,
+      "total_size_bytes": 148381
+    },
+    ".o": {
+      "count": 4,
+      "total_size_bytes": 25280
+    },
+    ".cmake": {
+      "count": 40,
+      "total_size_bytes": 28380
+    },
+    ".hwm": {
+      "count": 3,
+      "total_size_bytes": 2084
+    },
+    ".pwd": {
+      "count": 3,
+      "total_size_bytes": 9221200
+    },
+    ".pwi": {
+      "count": 3,
+      "total_size_bytes": 501880
+    },
+    ".evince-backend": {
+      "count": 6,
+      "total_size_bytes": 23846
+    },
+    ".ini": {
+      "count": 22,
+      "total_size_bytes": 32790
+    },
+    ".ttf": {
+      "count": 120,
+      "total_size_bytes": 50130478
+    },
+    ".xpi": {
+      "count": 114,
+      "total_size_bytes": 43207802
+    },
+    ".typelib": {
+      "count": 225,
+      "total_size_bytes": 12290292
+    },
+    ".23": {
+      "count": 4,
+      "total_size_bytes": 825506
+    },
+    ".summary": {
+      "count": 1,
+      "total_size_bytes": 4820
+    },
+    ".10": {
+      "count": 31,
+      "total_size_bytes": 8428089
+    },
+    ".11": {
+      "count": 17,
+      "total_size_bytes": 714285
+    },
+    ".31": {
+      "count": 5,
+      "total_size_bytes": 136
+    },
+    ".29": {
+      "count": 1,
+      "total_size_bytes": 23
+    },
+    ".15": {
+      "count": 36,
+      "total_size_bytes": 9888529
+    },
+    ".17": {
+      "count": 29,
+      "total_size_bytes": 46778480
+    },
+    ".56": {
+      "count": 1,
+      "total_size_bytes": 400288
+    },
+    ".20": {
+      "count": 19,
+      "total_size_bytes": 4991235
+    },
+    ".2302": {
+      "count": 1,
+      "total_size_bytes": 36728
+    },
+    ".517": {
+      "count": 1,
+      "total_size_bytes": 19704
+    },
+    ".13": {
+      "count": 10,
+      "total_size_bytes": 6775388
+    },
+    ".9": {
+      "count": 20,
+      "total_size_bytes": 972077
+    },
+    ".7": {
+      "count": 27,
+      "total_size_bytes": 3728205
+    },
+    ".2502": {
+      "count": 1,
+      "total_size_bytes": 24128
+    },
+    ".61": {
+      "count": 3,
+      "total_size_bytes": 69
+    },
+    ".101": {
+      "count": 1,
+      "total_size_bytes": 10272344
+    },
+    ".100": {
+      "count": 7,
+      "total_size_bytes": 8715704
+    },
+    ".16": {
+      "count": 10,
+      "total_size_bytes": 499270
+    },
+    ".59": {
+      "count": 1,
+      "total_size_bytes": 22
+    },
+    ".66": {
+      "count": 1,
+      "total_size_bytes": 22
+    },
+    ".sign": {
+      "count": 3,
+      "total_size_bytes": 768
+    },
+    ".76": {
+      "count": 2,
+      "total_size_bytes": 64768
+    },
+    ".12": {
+      "count": 17,
+      "total_size_bytes": 3282606
+    },
+    ".19": {
+      "count": 1,
+      "total_size_bytes": 17
+    },
+    ".18": {
+      "count": 6,
+      "total_size_bytes": 113632
+    },
+    ".26": {
+      "count": 6,
+      "total_size_bytes": 103086
+    },
+    ".03": {
+      "count": 2,
+      "total_size_bytes": 2521800
+    },
+    ".02": {
+      "count": 2,
+      "total_size_bytes": 416208
+    },
+    ".21": {
+      "count": 7,
+      "total_size_bytes": 408751
+    },
+    ".207": {
+      "count": 2,
+      "total_size_bytes": 47
+    },
+    ".20700": {
+      "count": 2,
+      "total_size_bytes": 624912
+    },
+    ".27": {
+      "count": 2,
+      "total_size_bytes": 55
+    },
+    ".75": {
+      "count": 1,
+      "total_size_bytes": 228608
+    },
+    ".39": {
+      "count": 3,
+      "total_size_bytes": 372008
+    },
+    ".51": {
+      "count": 1,
+      "total_size_bytes": 503048
+    },
+    ".28": {
+      "count": 1,
+      "total_size_bytes": 18
+    },
+    ".24": {
+      "count": 2,
+      "total_size_bytes": 90604
+    },
+    ".chk": {
+      "count": 3,
+      "total_size_bytes": 252
+    },
+    ".22": {
+      "count": 3,
+      "total_size_bytes": 7148830
+    },
+    ".32": {
+      "count": 3,
+      "total_size_bytes": 9987656
+    },
+    ".30": {
+      "count": 5,
+      "total_size_bytes": 493610
+    },
+    ".05": {
+      "count": 1,
+      "total_size_bytes": 22332912
+    },
+    ".114": {
+      "count": 1,
+      "total_size_bytes": 20
+    },
+    ".53": {
+      "count": 1,
+      "total_size_bytes": 291624
+    },
+    ".533": {
+      "count": 1,
+      "total_size_bytes": 536512
+    },
+    ".77": {
+      "count": 6,
+      "total_size_bytes": 102
+    },
+    ".62": {
+      "count": 1,
+      "total_size_bytes": 17
+    },
+    ".200": {
+      "count": 10,
+      "total_size_bytes": 638882
+    },
+    ".40": {
+      "count": 1,
+      "total_size_bytes": 20
+    },
+    ".a": {
+      "count": 10,
+      "total_size_bytes": 161830
+    },
+    ".89": {
+      "count": 1,
+      "total_size_bytes": 20
+    },
+    ".42": {
+      "count": 1,
+      "total_size_bytes": 17
+    },
+    ".128": {
+      "count": 1,
+      "total_size_bytes": 292440
+    },
+    ".351": {
+      "count": 1,
+      "total_size_bytes": 1162408
+    },
+    ".151": {
+      "count": 1,
+      "total_size_bytes": 21
+    },
+    ".58": {
+      "count": 1,
+      "total_size_bytes": 23
+    },
+    ".fodt": {
+      "count": 2,
+      "total_size_bytes": 1959515
+    },
+    ".css": {
+      "count": 161,
+      "total_size_bytes": 331162
+    },
+    ".ht": {
+      "count": 8,
+      "total_size_bytes": 4536531
+    },
+    ".cfs": {
+      "count": 8,
+      "total_size_bytes": 4359935
+    },
+    ".gen": {
+      "count": 8,
+      "total_size_bytes": 160
+    },
+    ".tree": {
+      "count": 9,
+      "total_size_bytes": 111360
+    },
+    ".xsl": {
+      "count": 123,
+      "total_size_bytes": 5705243
+    },
+    ".bau": {
+      "count": 4,
+      "total_size_bytes": 120896
+    },
+    ".xba": {
+      "count": 138,
+      "total_size_bytes": 4147999
+    },
+    ".xlb": {
+      "count": 34,
+      "total_size_bytes": 17583
+    },
+    ".xlc": {
+      "count": 4,
+      "total_size_bytes": 6217
+    },
+    ".fmt": {
+      "count": 1,
+      "total_size_bytes": 35313
+    },
+    ".odb": {
+      "count": 2,
+      "total_size_bytes": 6651
+    },
+    ".dbf": {
+      "count": 1,
+      "total_size_bytes": 75798
+    },
+    ".dbt": {
+      "count": 1,
+      "total_size_bytes": 46601
+    },
+    ".sdv": {
+      "count": 13,
+      "total_size_bytes": 4098048
+    },
+    ".thm": {
+      "count": 13,
+      "total_size_bytes": 22642
+    },
+    ".class": {
+      "count": 1,
+      "total_size_bytes": 1740
+    },
+    ".abignore": {
+      "count": 12,
+      "total_size_bytes": 695
+    },
+    ".ods": {
+      "count": 1,
+      "total_size_bytes": 18569
+    },
+    ".glsl": {
+      "count": 24,
+      "total_size_bytes": 49358
+    },
+    ".unorc": {
+      "count": 1,
+      "total_size_bytes": 44
+    },
+    ".rdb": {
+      "count": 7,
+      "total_size_bytes": 1372989
+    },
+    ".svg": {
+      "count": 7865,
+      "total_size_bytes": 9910029
+    },
+    ".hrc": {
+      "count": 1,
+      "total_size_bytes": 29310
+    },
+    ".java": {
+      "count": 6,
+      "total_size_bytes": 20383
+    },
+    ".xdl": {
+      "count": 20,
+      "total_size_bytes": 93128
+    },
+    ".pot": {
+      "count": 1,
+      "total_size_bytes": 25618
+    },
+    ".po": {
+      "count": 47,
+      "total_size_bytes": 20841012
+    },
+    ".zip": {
+      "count": 21,
+      "total_size_bytes": 74200831
+    },
+    ".ui": {
+      "count": 1258,
+      "total_size_bytes": 32884420
+    },
+    ".gif": {
+      "count": 186,
+      "total_size_bytes": 157339
+    },
+    ".sdg": {
+      "count": 12,
+      "total_size_bytes": 4383986
+    },
+    ".str": {
+      "count": 10,
+      "total_size_bytes": 15758
+    },
+    ".jpg": {
+      "count": 67,
+      "total_size_bytes": 3086792
+    },
+    ".wav": {
+      "count": 79,
+      "total_size_bytes": 5891632
+    },
+    ".soe": {
+      "count": 2,
+      "total_size_bytes": 12744
+    },
+    ".soc": {
+      "count": 8,
+      "total_size_bytes": 113674
+    },
+    ".sog": {
+      "count": 3,
+      "total_size_bytes": 42618
+    },
+    ".soh": {
+      "count": 2,
+      "total_size_bytes": 8103
+    },
+    ".sob": {
+      "count": 1,
+      "total_size_bytes": 1076407
+    },
+    ".sod": {
+      "count": 2,
+      "total_size_bytes": 7341
+    },
+    ".sop": {
+      "count": 1,
+      "total_size_bytes": 5830
+    },
+    ".ps": {
+      "count": 100,
+      "total_size_bytes": 1729663
+    },
+    ".xcd": {
+      "count": 14,
+      "total_size_bytes": 2940057
+    },
+    ".otg": {
+      "count": 1,
+      "total_size_bytes": 36563
+    },
+    ".oth": {
+      "count": 1,
+      "total_size_bytes": 4448
+    },
+    ".odt": {
+      "count": 4,
+      "total_size_bytes": 123197
+    },
+    ".ott": {
+      "count": 78,
+      "total_size_bytes": 1134785
+    },
+    ".otp": {
+      "count": 23,
+      "total_size_bytes": 6635748
+    },
+    ".otr": {
+      "count": 1,
+      "total_size_bytes": 2561
+    },
+    ".ots": {
+      "count": 18,
+      "total_size_bytes": 111874
+    },
+    ".theme": {
+      "count": 12,
+      "total_size_bytes": 68012
+    },
+    ".dic": {
+      "count": 416,
+      "total_size_bytes": 52059786
+    },
+    ".37": {
+      "count": 1,
+      "total_size_bytes": 523080
+    },
+    ".34": {
+      "count": 1,
+      "total_size_bytes": 2635496
+    },
+    ".321": {
+      "count": 1,
+      "total_size_bytes": 536152
+    },
+    ".60": {
+      "count": 10,
+      "total_size_bytes": 551472
+    },
+    ".41": {
+      "count": 3,
+      "total_size_bytes": 969896
+    },
+    ".43": {
+      "count": 1,
+      "total_size_bytes": 265496
+    },
+    ".1888": {
+      "count": 1,
+      "total_size_bytes": 692168
+    },
+    ".zlib-ng": {
+      "count": 1,
+      "total_size_bytes": 140856
+    },
+    ".gir": {
+      "count": 10,
+      "total_size_bytes": 4914383
+    },
+    ".papers-backend": {
+      "count": 4,
+      "total_size_bytes": 15158
+    },
+    ".plist": {
+      "count": 1,
+      "total_size_bytes": 62283
+    },
+    ".pm": {
+      "count": 283,
+      "total_size_bytes": 3897655
+    },
+    ".pod": {
+      "count": 14,
+      "total_size_bytes": 1043765
+    },
+    ".pl": {
+      "count": 655,
+      "total_size_bytes": 6490111
+    },
+    ".ix": {
+      "count": 1,
+      "total_size_bytes": 1581
+    },
+    ".al": {
+      "count": 75,
+      "total_size_bytes": 54249
+    },
+    ".1408": {
+      "count": 3,
+      "total_size_bytes": 497568
+    },
+    ".pc": {
+      "count": 8,
+      "total_size_bytes": 8354
+    },
+    ".ctypes": {
+      "count": 1,
+      "total_size_bytes": 296
+    },
+    ".pxi": {
+      "count": 26,
+      "total_size_bytes": 574273
+    },
+    ".pyx": {
+      "count": 2,
+      "total_size_bytes": 213837
+    },
+    ".pxd": {
+      "count": 16,
+      "total_size_bytes": 126561
+    },
+    ".dependencies": {
+      "count": 26,
+      "total_size_bytes": 70736
+    },
+    ".egg-info": {
+      "count": 1,
+      "total_size_bytes": 260
+    },
+    ".gpl": {
+      "count": 11,
+      "total_size_bytes": 198235
+    },
+    ".lgpl": {
+      "count": 28,
+      "total_size_bytes": 737079
+    },
+    ".ps1": {
+      "count": 1,
+      "total_size_bytes": 9031
+    },
+    ".fish": {
+      "count": 14,
+      "total_size_bytes": 45111
+    },
+    ".qmltypes": {
+      "count": 72,
+      "total_size_bytes": 2377809
+    },
+    ".qml": {
+      "count": 451,
+      "total_size_bytes": 2346540
+    },
+    ".metainfo": {
+      "count": 1,
+      "total_size_bytes": 17947
+    },
+    ".spdx": {
+      "count": 5,
+      "total_size_bytes": 2222845
+    },
+    ".plugin": {
+      "count": 8,
+      "total_size_bytes": 1379
+    },
+    ".efi": {
+      "count": 3,
+      "total_size_bytes": 1061471
+    },
+    ".signed": {
+      "count": 1,
+      "total_size_bytes": 74656
+    },
+    ".nautiluspreviewer": {
+      "count": 1,
+      "total_size_bytes": 167
+    },
+    ".convert": {
+      "count": 13,
+      "total_size_bytes": 20074
+    },
+    ".fd": {
+      "count": 16,
+      "total_size_bytes": 33554560
+    },
+    ".iso": {
+      "count": 2,
+      "total_size_bytes": 2619418
+    },
+    ".dir": {
+      "count": 6,
+      "total_size_bytes": 89167
+    },
+    ".glade": {
+      "count": 2,
+      "total_size_bytes": 34851
+    },
+    ".common": {
+      "count": 3,
+      "total_size_bytes": 19085
+    },
+    ".lss": {
+      "count": 1,
+      "total_size_bytes": 2156
+    },
+    ".p": {
+      "count": 1,
+      "total_size_bytes": 494
+    },
+    ".ks": {
+      "count": 1,
+      "total_size_bytes": 261
+    },
+    ".t": {
+      "count": 6,
+      "total_size_bytes": 13841508
+    },
+    ".russian": {
+      "count": 1,
+      "total_size_bytes": 1565
+    },
+    ".aug": {
+      "count": 261,
+      "total_size_bytes": 794731
+    },
+    ".awk": {
+      "count": 31,
+      "total_size_bytes": 27734
+    },
+    ".jxl": {
+      "count": 36,
+      "total_size_bytes": 28867214
+    },
+    ".webp": {
+      "count": 12,
+      "total_size_bytes": 5229224
+    },
+    ".static": {
+      "count": 1,
+      "total_size_bytes": 7
+    },
+    ".linux": {
+      "count": 5,
+      "total_size_bytes": 36249
+    },
+    ".d": {
+      "count": 3,
+      "total_size_bytes": 10826
+    },
+    ".test": {
+      "count": 53,
+      "total_size_bytes": 487422
+    },
+    ".test-2": {
+      "count": 1,
+      "total_size_bytes": 6
+    },
+    ".test-3": {
+      "count": 1,
+      "total_size_bytes": 6
+    },
+    ".ico": {
+      "count": 13,
+      "total_size_bytes": 32404
+    },
+    ".woff2": {
+      "count": 26,
+      "total_size_bytes": 739816
+    },
+    ".icc": {
+      "count": 21,
+      "total_size_bytes": 367360
+    },
+    ".cmf": {
+      "count": 3,
+      "total_size_bytes": 9939
+    },
+    ".sp": {
+      "count": 21,
+      "total_size_bytes": 48676
+    },
+    ".ti1": {
+      "count": 6,
+      "total_size_bytes": 87653
+    },
+    ".magic": {
+      "count": 2,
+      "total_size_bytes": 849
+    },
+    ".pmod": {
+      "count": 10,
+      "total_size_bytes": 6453
+    },
+    ".ppm": {
+      "count": 1,
+      "total_size_bytes": 331816
+    },
+    ".utf-8": {
+      "count": 1,
+      "total_size_bytes": 16
+    },
+    ".heavy": {
+      "count": 1,
+      "total_size_bytes": 1778
+    },
+    ".simple": {
+      "count": 1,
+      "total_size_bytes": 1212
+    },
+    ".pdf": {
+      "count": 17,
+      "total_size_bytes": 10345191
+    },
+    ".drv": {
+      "count": 19,
+      "total_size_bytes": 3505650
+    },
+    ".convs": {
+      "count": 7,
+      "total_size_bytes": 12586
+    },
+    ".usb-quirks": {
+      "count": 2,
+      "total_size_bytes": 14879
+    },
+    ".directory": {
+      "count": 42,
+      "total_size_bytes": 290888
+    },
+    ".words": {
+      "count": 1,
+      "total_size_bytes": 4953557
+    },
+    ".pub": {
+      "count": 21,
+      "total_size_bytes": 29484
+    },
+    ".asc": {
+      "count": 45,
+      "total_size_bytes": 324773
+    },
+    ".gpg": {
+      "count": 8,
+      "total_size_bytes": 35718
+    },
+    ".intel": {
+      "count": 3,
+      "total_size_bytes": 56293
+    },
+    ".php": {
+      "count": 2,
+      "total_size_bytes": 7161
+    },
+    ".deepbind": {
+      "count": 1,
+      "total_size_bytes": 1330
+    },
+    ".cron": {
+      "count": 1,
+      "total_size_bytes": 332
+    },
+    ".dia": {
+      "count": 6,
+      "total_size_bytes": 208510
+    },
+    ".c": {
+      "count": 24,
+      "total_size_bytes": 57805
+    },
+    ".too": {
+      "count": 1,
+      "total_size_bytes": 1051
+    },
+    ".openfwwf": {
+      "count": 1,
+      "total_size_bytes": 2022
+    },
+    ".b": {
+      "count": 4,
+      "total_size_bytes": 2861
+    },
+    ".sgml": {
+      "count": 1,
+      "total_size_bytes": 67092
+    },
+    ".7-releasenotes": {
+      "count": 2,
+      "total_size_bytes": 6262
+    },
+    ".0-releasenotes": {
+      "count": 16,
+      "total_size_bytes": 160956
+    },
+    ".1-releasenotes": {
+      "count": 13,
+      "total_size_bytes": 21995
+    },
+    ".2-releasenotes": {
+      "count": 9,
+      "total_size_bytes": 16079
+    },
+    ".3-releasenotes": {
+      "count": 8,
+      "total_size_bytes": 21956
+    },
+    ".4-releasenotes": {
+      "count": 5,
+      "total_size_bytes": 14853
+    },
+    ".5-releasenotes": {
+      "count": 5,
+      "total_size_bytes": 16035
+    },
+    ".6-releasenotes": {
+      "count": 3,
+      "total_size_bytes": 7673
+    },
+    ".8-releasenotes": {
+      "count": 1,
+      "total_size_bytes": 2065
+    },
+    ".htm": {
+      "count": 1,
+      "total_size_bytes": 36191
+    },
+    ".fedora": {
+      "count": 4,
+      "total_size_bytes": 3176
+    },
+    ".xcf": {
+      "count": 3,
+      "total_size_bytes": 43542
+    },
+    ".build": {
+      "count": 7,
+      "total_size_bytes": 8909
+    },
+    ".jpeg": {
+      "count": 2,
+      "total_size_bytes": 21282
+    },
+    ".std": {
+      "count": 1,
+      "total_size_bytes": 2362
+    },
+    ".multibyte": {
+      "count": 1,
+      "total_size_bytes": 1137
+    },
+    ".alphaboot": {
+      "count": 1,
+      "total_size_bytes": 1122
+    },
+    ".compression": {
+      "count": 1,
+      "total_size_bytes": 704
+    },
+    ".eltorito": {
+      "count": 1,
+      "total_size_bytes": 4662
+    },
+    ".graft_dirs": {
+      "count": 1,
+      "total_size_bytes": 4771
+    },
+    ".hfs_boot": {
+      "count": 1,
+      "total_size_bytes": 2949
+    },
+    ".hfs_magic": {
+      "count": 1,
+      "total_size_bytes": 2769
+    },
+    ".hide": {
+      "count": 1,
+      "total_size_bytes": 8475
+    },
+    ".hppaboot": {
+      "count": 1,
+      "total_size_bytes": 1431
+    },
+    ".joliet": {
+      "count": 1,
+      "total_size_bytes": 2180
+    },
+    ".macosx": {
+      "count": 1,
+      "total_size_bytes": 2042
+    },
+    ".mipsboot": {
+      "count": 1,
+      "total_size_bytes": 993
+    },
+    ".mipselboot": {
+      "count": 1,
+      "total_size_bytes": 1296
+    },
+    ".mkhybrid": {
+      "count": 1,
+      "total_size_bytes": 4941
+    },
+    ".prep_boot": {
+      "count": 1,
+      "total_size_bytes": 1780
+    },
+    ".releasenotes": {
+      "count": 1,
+      "total_size_bytes": 5935
+    },
+    ".rootinfo": {
+      "count": 1,
+      "total_size_bytes": 3411
+    },
+    ".session": {
+      "count": 4,
+      "total_size_bytes": 4170
+    },
+    ".sort": {
+      "count": 1,
+      "total_size_bytes": 3351
+    },
+    ".sparcboot": {
+      "count": 1,
+      "total_size_bytes": 3143
+    },
+    ".sunx86boot": {
+      "count": 1,
+      "total_size_bytes": 2778
+    },
+    ".lib": {
+      "count": 54,
+      "total_size_bytes": 1302446
+    },
+    ".in": {
+      "count": 3,
+      "total_size_bytes": 37473
+    },
+    ".cocci": {
+      "count": 20,
+      "total_size_bytes": 15673
+    },
+    ".res": {
+      "count": 1,
+      "total_size_bytes": 92
+    },
+    ".tcsh": {
+      "count": 3,
+      "total_size_bytes": 11958
+    },
+    ".zsh": {
+      "count": 1,
+      "total_size_bytes": 7156
+    },
+    ".perl": {
+      "count": 3,
+      "total_size_bytes": 18842
+    },
+    ".rs": {
+      "count": 5,
+      "total_size_bytes": 6798
+    },
+    ".proc": {
+      "count": 1,
+      "total_size_bytes": 0
+    },
+    ".rnames": {
+      "count": 1,
+      "total_size_bytes": 473
+    },
+    ".stuff": {
+      "count": 1,
+      "total_size_bytes": 5515
+    },
+    ".static-linking": {
+      "count": 5,
+      "total_size_bytes": 38980
+    },
+    ".acoustic": {
+      "count": 1,
+      "total_size_bytes": 1603
+    },
+    ".lsm": {
+      "count": 2,
+      "total_size_bytes": 8322
+    },
+    ".lesser": {
+      "count": 25,
+      "total_size_bytes": 341902
+    },
+    ".mpl": {
+      "count": 15,
+      "total_size_bytes": 286664
+    },
+    ".hunspell": {
+      "count": 1,
+      "total_size_bytes": 1973
+    },
+    ".myspell": {
+      "count": 1,
+      "total_size_bytes": 2912
+    },
+    ".hyphen": {
+      "count": 1,
+      "total_size_bytes": 4894
+    },
+    ".nonstandard": {
+      "count": 1,
+      "total_size_bytes": 4232
+    },
+    ".x": {
+      "count": 1,
+      "total_size_bytes": 18737
+    },
+    ".devel": {
+      "count": 1,
+      "total_size_bytes": 1136
+    },
+    ".bonding": {
+      "count": 1,
+      "total_size_bytes": 107684
+    },
+    ".gplv2": {
+      "count": 15,
+      "total_size_bytes": 271195
+    },
+    ".ubdl": {
+      "count": 1,
+      "total_size_bytes": 2931
+    },
+    ".specfile": {
+      "count": 1,
+      "total_size_bytes": 11973
+    },
+    ".xmodmap": {
+      "count": 3,
+      "total_size_bytes": 6828
+    },
+    ".diffs": {
+      "count": 1,
+      "total_size_bytes": 1407
+    },
+    ".cer": {
+      "count": 1,
+      "total_size_bytes": 920
+    },
+    ".crypto": {
+      "count": 1,
+      "total_size_bytes": 3440
+    },
+    ".libcdio": {
+      "count": 1,
+      "total_size_bytes": 7622
+    },
+    ".libtextcat": {
+      "count": 1,
+      "total_size_bytes": 5469
+    },
+    ".bz2": {
+      "count": 8,
+      "total_size_bytes": 201304
+    },
+    ".ijg": {
+      "count": 1,
+      "total_size_bytes": 12799
+    },
+    ".libv4l": {
+      "count": 2,
+      "total_size_bytes": 34543
+    },
+    ".conf-example": {
+      "count": 1,
+      "total_size_bytes": 2687
+    },
+    ".notes": {
+      "count": 1,
+      "total_size_bytes": 8933
+    },
+    ".nanorc": {
+      "count": 46,
+      "total_size_bytes": 66712
+    },
+    ".trimmed": {
+      "count": 1,
+      "total_size_bytes": 256000
+    },
+    ".request": {
+      "count": 1,
+      "total_size_bytes": 18
+    },
+    ".opencore": {
+      "count": 1,
+      "total_size_bytes": 3088
+    },
+    ".pkcs15init": {
+      "count": 1,
+      "total_size_bytes": 572
+    },
+    ".scconf": {
+      "count": 1,
+      "total_size_bytes": 9636
+    },
+    ".agent": {
+      "count": 1,
+      "total_size_bytes": 4389
+    },
+    ".certkeys": {
+      "count": 1,
+      "total_size_bytes": 13352
+    },
+    ".chacha20poly1305": {
+      "count": 1,
+      "total_size_bytes": 4631
+    },
+    ".krl": {
+      "count": 1,
+      "total_size_bytes": 7037
+    },
+    ".mux": {
+      "count": 1,
+      "total_size_bytes": 8997
+    },
+    ".sshsig": {
+      "count": 1,
+      "total_size_bytes": 3425
+    },
+    ".u2f": {
+      "count": 1,
+      "total_size_bytes": 11080
+    },
+    ".dns": {
+      "count": 1,
+      "total_size_bytes": 1615
+    },
+    ".platform": {
+      "count": 1,
+      "total_size_bytes": 4081
+    },
+    ".privsep": {
+      "count": 1,
+      "total_size_bytes": 2216
+    },
+    ".tun": {
+      "count": 1,
+      "total_size_bytes": 4890
+    },
+    ".auth-pam": {
+      "count": 1,
+      "total_size_bytes": 4061
+    },
+    ".down-root": {
+      "count": 1,
+      "total_size_bytes": 880
+    },
+    ".systemd": {
+      "count": 1,
+      "total_size_bytes": 2422
+    },
+    ".down": {
+      "count": 2,
+      "total_size_bytes": 2372
+    },
+    ".up": {
+      "count": 2,
+      "total_size_bytes": 4317
+    },
+    ".patch": {
+      "count": 3,
+      "total_size_bytes": 18056
+    },
+    ".ovpn": {
+      "count": 1,
+      "total_size_bytes": 2968
+    },
+    ".polkit": {
+      "count": 2,
+      "total_size_bytes": 3000
+    },
+    ".mkdn": {
+      "count": 1,
+      "total_size_bytes": 3049
+    },
+    ".mppe": {
+      "count": 1,
+      "total_size_bytes": 2860
+    },
+    ".mschap80": {
+      "count": 1,
+      "total_size_bytes": 6253
+    },
+    ".mschap81": {
+      "count": 1,
+      "total_size_bytes": 2421
+    },
+    ".cbcp": {
+      "count": 1,
+      "total_size_bytes": 2045
+    },
+    ".eap-tls": {
+      "count": 1,
+      "total_size_bytes": 8909
+    },
+    ".pppoe": {
+      "count": 1,
+      "total_size_bytes": 3495
+    },
+    ".pwfd": {
+      "count": 1,
+      "total_size_bytes": 3556
+    },
+    ".ttyxx": {
+      "count": 1,
+      "total_size_bytes": 470
+    },
+    ".am": {
+      "count": 1,
+      "total_size_bytes": 431
+    },
+    ".add": {
+      "count": 2,
+      "total_size_bytes": 1462
+    },
+    ".bat": {
+      "count": 1,
+      "total_size_bytes": 5098
+    },
+    ".qdocconf": {
+      "count": 120,
+      "total_size_bytes": 126755
+    },
+    ".qdoc": {
+      "count": 12,
+      "total_size_bytes": 138431
+    },
+    ".qdocinc": {
+      "count": 8,
+      "total_size_bytes": 22195
+    },
+    ".eot": {
+      "count": 2,
+      "total_size_bytes": 9248
+    },
+    ".woff": {
+      "count": 22,
+      "total_size_bytes": 353404
+    },
+    ".cpp": {
+      "count": 4,
+      "total_size_bytes": 7535
+    },
+    ".tex": {
+      "count": 1,
+      "total_size_bytes": 14675
+    },
+    ".smbspool": {
+      "count": 1,
+      "total_size_bytes": 691
+    },
+    ".activedirectory": {
+      "count": 1,
+      "total_size_bytes": 7864
+    },
+    ".ibm_ldap": {
+      "count": 1,
+      "total_size_bytes": 4418
+    },
+    ".openldap": {
+      "count": 1,
+      "total_size_bytes": 2499
+    },
+    ".iplanet": {
+      "count": 1,
+      "total_size_bytes": 2271
+    },
+    ".olcsudo": {
+      "count": 1,
+      "total_size_bytes": 2671
+    },
+    ".logs": {
+      "count": 1,
+      "total_size_bytes": 1041
+    },
+    ".terms": {
+      "count": 1,
+      "total_size_bytes": 2255
+    },
+    ".testing": {
+      "count": 1,
+      "total_size_bytes": 860
+    },
+    ".enhancing": {
+      "count": 1,
+      "total_size_bytes": 24324
+    },
+    ".0bsd": {
+      "count": 2,
+      "total_size_bytes": 1214
+    },
+    ".cr": {
+      "count": 1,
+      "total_size_bytes": 6430
+    },
+    ".igvm": {
+      "count": 2,
+      "total_size_bytes": 2414152
+    },
+    ".qcow2": {
+      "count": 4,
+      "total_size_bytes": 8478720
+    },
+    ".el": {
+      "count": 2,
+      "total_size_bytes": 7971
+    },
+    ".ordering": {
+      "count": 1,
+      "total_size_bytes": 317
+    },
+    ".rdf": {
+      "count": 1,
+      "total_size_bytes": 1621
+    },
+    ".schema": {
+      "count": 1,
+      "total_size_bytes": 5655
+    },
+    ".ffpreset": {
+      "count": 5,
+      "total_size_bytes": 1127
+    },
+    ".filter": {
+      "count": 1,
+      "total_size_bytes": 13
+    },
+    ".trigger": {
+      "count": 3,
+      "total_size_bytes": 821
+    },
+    ".otf": {
+      "count": 92,
+      "total_size_bytes": 16906672
+    },
+    ".ttc": {
+      "count": 3,
+      "total_size_bytes": 122079560
+    },
+    ".scale": {
+      "count": 3,
+      "total_size_bytes": 16685
+    },
+    ".afm": {
+      "count": 38,
+      "total_size_bytes": 3550795
+    },
+    ".t1": {
+      "count": 35,
+      "total_size_bytes": 4480458
+    },
+    ".schemas": {
+      "count": 1,
+      "total_size_bytes": 3442
+    },
+    ".loc": {
+      "count": 8,
+      "total_size_bytes": 6706
+    },
+    ".its": {
+      "count": 11,
+      "total_size_bytes": 37972
+    },
+    ".sed": {
+      "count": 5,
+      "total_size_bytes": 4065
+    },
+    ".header": {
+      "count": 2,
+      "total_size_bytes": 3404
+    },
+    ".xsd10": {
+      "count": 2,
+      "total_size_bytes": 9883
+    },
+    ".xsd11": {
+      "count": 2,
+      "total_size_bytes": 8709
+    },
+    ".gs": {
+      "count": 1,
+      "total_size_bytes": 13200
+    },
+    ".upp": {
+      "count": 88,
+      "total_size_bytes": 123209
+    },
+    ".rpd": {
+      "count": 1,
+      "total_size_bytes": 639
+    },
+    ".ppd": {
+      "count": 10,
+      "total_size_bytes": 143842
+    },
+    ".xbm": {
+      "count": 8,
+      "total_size_bytes": 7698
+    },
+    ".xpm": {
+      "count": 7,
+      "total_size_bytes": 11445
+    },
+    ".override": {
+      "count": 9,
+      "total_size_bytes": 1777
+    },
+    ".compiled": {
+      "count": 1,
+      "total_size_bytes": 189712
+    },
+    ".gresource": {
+      "count": 71,
+      "total_size_bytes": 15323028
+    },
+    ".maps": {
+      "count": 1,
+      "total_size_bytes": 311
+    },
+    ".ptx": {
+      "count": 2,
+      "total_size_bytes": 14312
+    },
+    ".spv": {
+      "count": 1,
+      "total_size_bytes": 12580
+    },
+    ".screensaver": {
+      "count": 1,
+      "total_size_bytes": 280
+    },
+    ".extensions": {
+      "count": 1,
+      "total_size_bytes": 280
+    },
+    ".notifications": {
+      "count": 1,
+      "total_size_bytes": 280
+    },
+    ".screencast": {
+      "count": 1,
+      "total_size_bytes": 280
+    },
+    ".pfa_": {
+      "count": 3,
+      "total_size_bytes": 26257
+    },
+    ".enc": {
+      "count": 84,
+      "total_size_bytes": 1517743
+    },
+    ".tmac": {
+      "count": 42,
+      "total_size_bytes": 525825
+    },
+    ".cs": {
+      "count": 2,
+      "total_size_bytes": 21610
+    },
+    ".den": {
+      "count": 1,
+      "total_size_bytes": 159912
+    },
+    ".det": {
+      "count": 1,
+      "total_size_bytes": 160743
+    },
+    ".en": {
+      "count": 2,
+      "total_size_bytes": 36124
+    },
+    ".fr": {
+      "count": 1,
+      "total_size_bytes": 28051
+    },
+    ".it": {
+      "count": 1,
+      "total_size_bytes": 5011
+    },
+    ".sv": {
+      "count": 1,
+      "total_size_bytes": 34668
+    },
+    ".pf2": {
+      "count": 3,
+      "total_size_bytes": 2451318
+    },
+    ".gep": {
+      "count": 11,
+      "total_size_bytes": 6425
+    },
+    ".prs": {
+      "count": 21,
+      "total_size_bytes": 4051
+    },
+    ".lang": {
+      "count": 283,
+      "total_size_bytes": 2395274
+    },
+    ".monitor": {
+      "count": 5,
+      "total_size_bytes": 548
+    },
+    ".page": {
+      "count": 21540,
+      "total_size_bytes": 70305104
+    },
+    ".docbook": {
+      "count": 98,
+      "total_size_bytes": 4499921
+    },
+    ".webm": {
+      "count": 44,
+      "total_size_bytes": 606919
+    },
+    ".qm": {
+      "count": 693,
+      "total_size_bytes": 31806910
+    },
+    ".var": {
+      "count": 18,
+      "total_size_bytes": 194614
+    },
+    ".aff": {
+      "count": 24,
+      "total_size_bytes": 36924
+    },
+    ".ids": {
+      "count": 4,
+      "total_size_bytes": 2353535
+    },
+    ".dict": {
+      "count": 173,
+      "total_size_bytes": 154955752
+    },
+    ".bmp": {
+      "count": 1,
+      "total_size_bytes": 4234
+    },
+    ".rom": {
+      "count": 33,
+      "total_size_bytes": 2914704
+    },
+    ".lm": {
+      "count": 178,
+      "total_size_bytes": 422437
+    },
+    ".quirks": {
+      "count": 51,
+      "total_size_bytes": 56111
+    },
+    ".utb": {
+      "count": 107,
+      "total_size_bytes": 1246250
+    },
+    ".uti": {
+      "count": 33,
+      "total_size_bytes": 329456
+    },
+    ".tbl": {
+      "count": 68,
+      "total_size_bytes": 90072
+    },
+    ".dis": {
+      "count": 26,
+      "total_size_bytes": 212896
+    },
+    ".sem": {
+      "count": 26,
+      "total_size_bytes": 139083
+    },
+    ".sor": {
+      "count": 51,
+      "total_size_bytes": 242927
+    },
+    ".tri": {
+      "count": 1,
+      "total_size_bytes": 588096
+    },
+    ".tablet": {
+      "count": 612,
+      "total_size_bytes": 360829
+    },
+    ".stylus": {
+      "count": 2,
+      "total_size_bytes": 13659
+    },
+    ".cddl": {
+      "count": 2,
+      "total_size_bytes": 35926
+    },
+    ".gfdl": {
+      "count": 1,
+      "total_size_bytes": 18139
+    },
+    ".amdgpu": {
+      "count": 2,
+      "total_size_bytes": 5876
+    },
+    ".amdnpu": {
+      "count": 2,
+      "total_size_bytes": 2372
+    },
+    ".radeon": {
+      "count": 2,
+      "total_size_bytes": 5886
+    },
+    ".amd-ucode": {
+      "count": 2,
+      "total_size_bytes": 7516
+    },
+    ".atheros_firmware": {
+      "count": 2,
+      "total_size_bytes": 3892
+    },
+    ".open-ath9k-htc-firmware": {
+      "count": 2,
+      "total_size_bytes": 18818
+    },
+    ".qualcommatheros_ar3k": {
+      "count": 2,
+      "total_size_bytes": 5416
+    },
+    ".qualcommatheros_ath10k": {
+      "count": 2,
+      "total_size_bytes": 5426
+    },
+    ".broadcom_bcm43xx": {
+      "count": 2,
+      "total_size_bytes": 8356
+    },
+    ".cypress": {
+      "count": 2,
+      "total_size_bytes": 17828
+    },
+    ".cirrus": {
+      "count": 2,
+      "total_size_bytes": 53492
+    },
+    ".license": {
+      "count": 17,
+      "total_size_bytes": 95470
+    },
+    ".0-only": {
+      "count": 4,
+      "total_size_bytes": 73632
+    },
+    ".0-or-later": {
+      "count": 6,
+      "total_size_bytes": 142666
+    },
+    ".1-or-later": {
+      "count": 9,
+      "total_size_bytes": 238770
+    },
+    ".1-or-later-with-cryptsetup-openssl-exception": {
+      "count": 1,
+      "total_size_bytes": 27247
+    },
+    ".texi": {
+      "count": 1,
+      "total_size_bytes": 23565
+    },
+    ".openssl": {
+      "count": 1,
+      "total_size_bytes": 10175
+    },
+    ".bsd2": {
+      "count": 2,
+      "total_size_bytes": 2572
+    },
+    ".ucd": {
+      "count": 1,
+      "total_size_bytes": 2788
+    },
+    ".fdl": {
+      "count": 4,
+      "total_size_bytes": 91837
+    },
+    ".xiph": {
+      "count": 1,
+      "total_size_bytes": 1509
+    },
+    ".lgplv2": {
+      "count": 1,
+      "total_size_bytes": 26530
+    },
+    ".tools": {
+      "count": 1,
+      "total_size_bytes": 17987
+    },
+    ".lesserv3": {
+      "count": 3,
+      "total_size_bytes": 22930
+    },
+    ".lesserv2": {
+      "count": 2,
+      "total_size_bytes": 52838
+    },
+    ".gpl3": {
+      "count": 6,
+      "total_size_bytes": 210801
+    },
+    ".intcsst2": {
+      "count": 2,
+      "total_size_bytes": 4082
+    },
+    ".adsp_sst": {
+      "count": 2,
+      "total_size_bytes": 96724
+    },
+    ".i915": {
+      "count": 2,
+      "total_size_bytes": 4160
+    },
+    ".ivsc": {
+      "count": 2,
+      "total_size_bytes": 4028
+    },
+    ".iwlwifi_firmware": {
+      "count": 5,
+      "total_size_bytes": 10230
+    },
+    ".fc43": {
+      "count": 1,
+      "total_size_bytes": 496
+    },
+    ".crosvm": {
+      "count": 1,
+      "total_size_bytes": 1562
+    },
+    ".marvell": {
+      "count": 2,
+      "total_size_bytes": 2304
+    },
+    ".olpc": {
+      "count": 2,
+      "total_size_bytes": 3554
+    },
+    ".runtime": {
+      "count": 1,
+      "total_size_bytes": 3324
+    },
+    ".unicode": {
+      "count": 1,
+      "total_size_bytes": 8782
+    },
+    ".gplv3": {
+      "count": 4,
+      "total_size_bytes": 141001
+    },
+    ".lgplv3": {
+      "count": 3,
+      "total_size_bytes": 23998
+    },
+    ".bsd-2-clause": {
+      "count": 3,
+      "total_size_bytes": 3735
+    },
+    ".bsd-3-clause": {
+      "count": 4,
+      "total_size_bytes": 5907
+    },
+    ".abilis": {
+      "count": 1,
+      "total_size_bytes": 1071
+    },
+    ".hp": {
+      "count": 1,
+      "total_size_bytes": 1306
+    },
+    ".nxp": {
+      "count": 3,
+      "total_size_bytes": 11523
+    },
+    ".netronome": {
+      "count": 1,
+      "total_size_bytes": 3624
+    },
+    ".advansys": {
+      "count": 1,
+      "total_size_bytes": 341
+    },
+    ".agere": {
+      "count": 1,
+      "total_size_bytes": 3539
+    },
+    ".alacritech": {
+      "count": 1,
+      "total_size_bytes": 572
+    },
+    ".bnx2": {
+      "count": 1,
+      "total_size_bytes": 292
+    },
+    ".bnx2x": {
+      "count": 1,
+      "total_size_bytes": 336
+    },
+    ".ca0132": {
+      "count": 1,
+      "total_size_bytes": 2494
+    },
+    ".cadence": {
+      "count": 1,
+      "total_size_bytes": 2870
+    },
+    ".cavium": {
+      "count": 1,
+      "total_size_bytes": 3711
+    },
+    ".cavium_liquidio": {
+      "count": 1,
+      "total_size_bytes": 4000
+    },
+    ".chelsio_firmware": {
+      "count": 1,
+      "total_size_bytes": 1485
+    },
+    ".cnm": {
+      "count": 1,
+      "total_size_bytes": 2055
+    },
+    ".cw1200": {
+      "count": 1,
+      "total_size_bytes": 1954
+    },
+    ".cw1200-sdd": {
+      "count": 1,
+      "total_size_bytes": 509
+    },
+    ".cxgb3": {
+      "count": 1,
+      "total_size_bytes": 213
+    },
+    ".dabusb": {
+      "count": 1,
+      "total_size_bytes": 245
+    },
+    ".e100": {
+      "count": 1,
+      "total_size_bytes": 1492
+    },
+    ".emi26": {
+      "count": 1,
+      "total_size_bytes": 798
+    },
+    ".ene_firmware": {
+      "count": 1,
+      "total_size_bytes": 738
+    },
+    ".fw_sst_0f28": {
+      "count": 1,
+      "total_size_bytes": 1892
+    },
+    ".go7007": {
+      "count": 1,
+      "total_size_bytes": 20217
+    },
+    ".ibt_firmware": {
+      "count": 1,
+      "total_size_bytes": 2040
+    },
+    ".inside-secure": {
+      "count": 1,
+      "total_size_bytes": 268
+    },
+    ".it913x": {
+      "count": 1,
+      "total_size_bytes": 851
+    },
+    ".kaweth": {
+      "count": 1,
+      "total_size_bytes": 1599
+    },
+    ".keyspan": {
+      "count": 1,
+      "total_size_bytes": 802
+    },
+    ".lenovo": {
+      "count": 1,
+      "total_size_bytes": 2527
+    },
+    ".linaro": {
+      "count": 1,
+      "total_size_bytes": 1609
+    },
+    ".mali_csffw": {
+      "count": 1,
+      "total_size_bytes": 9690
+    },
+    ".mediatek": {
+      "count": 2,
+      "total_size_bytes": 1122
+    },
+    ".microchip": {
+      "count": 1,
+      "total_size_bytes": 2336
+    },
+    ".moxa": {
+      "count": 1,
+      "total_size_bytes": 892
+    },
+    ".multitech": {
+      "count": 1,
+      "total_size_bytes": 151
+    },
+    ".myri10ge_firmware": {
+      "count": 1,
+      "total_size_bytes": 1450
+    },
+    ".nvidia": {
+      "count": 2,
+      "total_size_bytes": 12424
+    },
+    ".phanfw": {
+      "count": 1,
+      "total_size_bytes": 1873
+    },
+    ".qat_firmware": {
+      "count": 1,
+      "total_size_bytes": 1878
+    },
+    ".qla1280": {
+      "count": 1,
+      "total_size_bytes": 1387
+    },
+    ".qla2xxx": {
+      "count": 1,
+      "total_size_bytes": 1843
+    },
+    ".r8a779x_usb3": {
+      "count": 1,
+      "total_size_bytes": 1451
+    },
+    ".ralink_a_mediatek_company_firmware": {
+      "count": 2,
+      "total_size_bytes": 4200
+    },
+    ".rockchip": {
+      "count": 1,
+      "total_size_bytes": 2106
+    },
+    ".sensoray": {
+      "count": 1,
+      "total_size_bytes": 458
+    },
+    ".siano": {
+      "count": 1,
+      "total_size_bytes": 1449
+    },
+    ".ti-connectivity": {
+      "count": 2,
+      "total_size_bytes": 5836
+    },
+    ".ti-keystone": {
+      "count": 1,
+      "total_size_bytes": 2913
+    },
+    ".ti-tspa": {
+      "count": 1,
+      "total_size_bytes": 2145
+    },
+    ".tigon": {
+      "count": 1,
+      "total_size_bytes": 257
+    },
+    ".typhoon": {
+      "count": 1,
+      "total_size_bytes": 1790
+    },
+    ".ueagle": {
+      "count": 1,
+      "total_size_bytes": 437
+    },
+    ".ueagle-atm4-firmware": {
+      "count": 1,
+      "total_size_bytes": 2052
+    },
+    ".via_vt6656": {
+      "count": 1,
+      "total_size_bytes": 1256
+    },
+    ".wl1251": {
+      "count": 1,
+      "total_size_bytes": 2903
+    },
+    ".xc4000": {
+      "count": 1,
+      "total_size_bytes": 1187
+    },
+    ".xc5000": {
+      "count": 1,
+      "total_size_bytes": 1179
+    },
+    ".xc5000c": {
+      "count": 1,
+      "total_size_bytes": 1227
+    },
+    ".lontium": {
+      "count": 1,
+      "total_size_bytes": 558
+    },
+    ".aeonsemi": {
+      "count": 1,
+      "total_size_bytes": 620
+    },
+    ".airoha": {
+      "count": 1,
+      "total_size_bytes": 556
+    },
+    ".amd-sev": {
+      "count": 1,
+      "total_size_bytes": 3760
+    },
+    ".amd_pmf": {
+      "count": 1,
+      "total_size_bytes": 2938
+    },
+    ".amdisp": {
+      "count": 1,
+      "total_size_bytes": 8462
+    },
+    ".amlogic": {
+      "count": 1,
+      "total_size_bytes": 752
+    },
+    ".amlogic_vdec": {
+      "count": 1,
+      "total_size_bytes": 756
+    },
+    ".amphion_vpu": {
+      "count": 1,
+      "total_size_bytes": 2644
+    },
+    ".atmel": {
+      "count": 1,
+      "total_size_bytes": 2103
+    },
+    ".bfa": {
+      "count": 1,
+      "total_size_bytes": 814
+    },
+    ".bmi260": {
+      "count": 1,
+      "total_size_bytes": 1505
+    },
+    ".conexant": {
+      "count": 1,
+      "total_size_bytes": 458
+    },
+    ".dell": {
+      "count": 1,
+      "total_size_bytes": 6819
+    },
+    ".dib0700": {
+      "count": 1,
+      "total_size_bytes": 1039
+    },
+    ".drxk": {
+      "count": 1,
+      "total_size_bytes": 457
+    },
+    ".hfi1_firmware": {
+      "count": 1,
+      "total_size_bytes": 1905
+    },
+    ".ib_qib": {
+      "count": 1,
+      "total_size_bytes": 1347
+    },
+    ".ice": {
+      "count": 1,
+      "total_size_bytes": 2041
+    },
+    ".ice_enhanced": {
+      "count": 1,
+      "total_size_bytes": 2082
+    },
+    ".intel_vpu": {
+      "count": 1,
+      "total_size_bytes": 2041
+    },
+    ".ipu3_firmware": {
+      "count": 1,
+      "total_size_bytes": 1870
+    },
+    ".ixp4xx": {
+      "count": 1,
+      "total_size_bytes": 1890
+    },
+    ".mellanox": {
+      "count": 1,
+      "total_size_bytes": 1605
+    },
+    ".mga": {
+      "count": 1,
+      "total_size_bytes": 1097
+    },
+    ".montage": {
+      "count": 1,
+      "total_size_bytes": 3755
+    },
+    ".nxp_mc_firmware": {
+      "count": 1,
+      "total_size_bytes": 7259
+    },
+    ".powervr": {
+      "count": 1,
+      "total_size_bytes": 2190
+    },
+    ".qcom": {
+      "count": 2,
+      "total_size_bytes": 27924
+    },
+    ".qcom-2": {
+      "count": 1,
+      "total_size_bytes": 14417
+    },
+    ".qcom_yamato": {
+      "count": 1,
+      "total_size_bytes": 1540
+    },
+    ".qed": {
+      "count": 1,
+      "total_size_bytes": 288
+    },
+    ".r8169": {
+      "count": 1,
+      "total_size_bytes": 219
+    },
+    ".rp2": {
+      "count": 1,
+      "total_size_bytes": 495
+    },
+    ".rsi": {
+      "count": 1,
+      "total_size_bytes": 271
+    },
+    ".rt1320": {
+      "count": 1,
+      "total_size_bytes": 214
+    },
+    ".s5p-mfc": {
+      "count": 1,
+      "total_size_bytes": 475
+    },
+    ".sdma_firmware": {
+      "count": 1,
+      "total_size_bytes": 2602
+    },
+    ".tehuti": {
+      "count": 1,
+      "total_size_bytes": 201
+    },
+    ".tlg2300": {
+      "count": 1,
+      "total_size_bytes": 483
+    },
+    ".vxge": {
+      "count": 1,
+      "total_size_bytes": 281
+    },
+    ".xe": {
+      "count": 1,
+      "total_size_bytes": 2041
+    },
+    ".gpl-2": {
+      "count": 1,
+      "total_size_bytes": 15239
+    },
+    ".lgpl-2": {
+      "count": 1,
+      "total_size_bytes": 25384
+    },
+    ".1+": {
+      "count": 1,
+      "total_size_bytes": 26530
+    },
+    ".openct": {
+      "count": 1,
+      "total_size_bytes": 1626
+    },
+    ".adobe": {
+      "count": 1,
+      "total_size_bytes": 1565
+    },
+    ".gpl2": {
+      "count": 6,
+      "total_size_bytes": 108342
+    },
+    ".lz4": {
+      "count": 1,
+      "total_size_bytes": 1311
+    },
+    ".xxhash": {
+      "count": 1,
+      "total_size_bytes": 1389
+    },
+    ".zlib": {
+      "count": 1,
+      "total_size_bytes": 1002
+    },
+    ".zstd": {
+      "count": 1,
+      "total_size_bytes": 1549
+    },
+    ".gpl3-except": {
+      "count": 5,
+      "total_size_bytes": 181815
+    },
+    ".lgpl3": {
+      "count": 7,
+      "total_size_bytes": 53543
+    },
+    ".lgplv21": {
+      "count": 1,
+      "total_size_bytes": 26828
+    },
+    ".asl20": {
+      "count": 1,
+      "total_size_bytes": 9137
+    },
+    ".logo": {
+      "count": 1,
+      "total_size_bytes": 89
+    },
+    ".fastfeat": {
+      "count": 1,
+      "total_size_bytes": 1506
+    },
+    ".safestringlib": {
+      "count": 1,
+      "total_size_bytes": 2247
+    },
+    ".bsd-4-clause-uc": {
+      "count": 2,
+      "total_size_bytes": 3648
+    },
+    ".isc": {
+      "count": 2,
+      "total_size_bytes": 1394
+    },
+    ".xterm": {
+      "count": 1,
+      "total_size_bytes": 1434
+    },
+    ".copying": {
+      "count": 2,
+      "total_size_bytes": 3054
+    },
+    ".license-apple": {
+      "count": 2,
+      "total_size_bytes": 2626
+    },
+    ".license-lgpl-2": {
+      "count": 2,
+      "total_size_bytes": 50756
+    },
+    ".rule": {
+      "count": 32,
+      "total_size_bytes": 8823
+    },
+    ".flt": {
+      "count": 49,
+      "total_size_bytes": 245481
+    },
+    ".mim": {
+      "count": 194,
+      "total_size_bytes": 1657715
+    },
+    ".mgc": {
+      "count": 1,
+      "total_size_bytes": 10356336
+    },
+    ".idx": {
+      "count": 23,
+      "total_size_bytes": 3051884
+    },
+    ".description": {
+      "count": 1,
+      "total_size_bytes": 373
+    },
+    ".ontology": {
+      "count": 1,
+      "total_size_bytes": 818
+    },
+    ".vmsg": {
+      "count": 20,
+      "total_size_bytes": 95447
+    },
+    ".mhr": {
+      "count": 1,
+      "total_size_bytes": 159841
+    },
+    ".ambdec": {
+      "count": 7,
+      "total_size_bytes": 11984
+    },
+    ".characters": {
+      "count": 1,
+      "total_size_bytes": 238
+    },
+    ".weather": {
+      "count": 1,
+      "total_size_bytes": 346
+    },
+    ".backgroundservice": {
+      "count": 1,
+      "total_size_bytes": 447
+    },
+    ".module": {
+      "count": 3,
+      "total_size_bytes": 1878
+    },
+    ".outlang": {
+      "count": 29,
+      "total_size_bytes": 21553
+    },
+    ".vol": {
+      "count": 2,
+      "total_size_bytes": 1510
+    },
+    ".icns": {
+      "count": 1,
+      "total_size_bytes": 22426
+    },
+    ".p11-kit": {
+      "count": 1,
+      "total_size_bytes": 2545081
+    },
+    ".plymouth": {
+      "count": 5,
+      "total_size_bytes": 4390
+    },
+    ".choice": {
+      "count": 3,
+      "total_size_bytes": 8643
+    },
+    ".dafsa": {
+      "count": 1,
+      "total_size_bytes": 54036
+    },
+    ".whl": {
+      "count": 1,
+      "total_size_bytes": 1303919
+    },
+    ".categories": {
+      "count": 1,
+      "total_size_bytes": 179
+    },
+    ".renamecategories": {
+      "count": 1,
+      "total_size_bytes": 131
+    },
+    ".ttl": {
+      "count": 2,
+      "total_size_bytes": 3404
+    },
+    ".if": {
+      "count": 5,
+      "total_size_bytes": 34447
+    },
+    ".pp": {
+      "count": 6,
+      "total_size_bytes": 557108
+    },
+    ".oga": {
+      "count": 35,
+      "total_size_bytes": 470163
+    },
+    ".ogg": {
+      "count": 4,
+      "total_size_bytes": 80640
+    },
+    ".style": {
+      "count": 10,
+      "total_size_bytes": 5450
+    },
+    ".stp": {
+      "count": 27,
+      "total_size_bytes": 22778763
+    },
+    ".msg": {
+      "count": 127,
+      "total_size_bytes": 94965
+    },
+    ".tm": {
+      "count": 5,
+      "total_size_bytes": 340148
+    },
+    ".eterm": {
+      "count": 1,
+      "total_size_bytes": 2255
+    },
+    ".gnome": {
+      "count": 1,
+      "total_size_bytes": 3146
+    },
+    ".konsole": {
+      "count": 1,
+      "total_size_bytes": 3322
+    },
+    ".konsole-256color": {
+      "count": 1,
+      "total_size_bytes": 3480
+    },
+    ".linux-s": {
+      "count": 1,
+      "total_size_bytes": 1814
+    },
+    ".mlterm": {
+      "count": 1,
+      "total_size_bytes": 3232
+    },
+    ".mlterm-256color": {
+      "count": 1,
+      "total_size_bytes": 3402
+    },
+    ".mrxvt": {
+      "count": 1,
+      "total_size_bytes": 3125
+    },
+    ".putty": {
+      "count": 1,
+      "total_size_bytes": 2530
+    },
+    ".putty-256color": {
+      "count": 1,
+      "total_size_bytes": 2622
+    },
+    ".rxvt": {
+      "count": 1,
+      "total_size_bytes": 2311
+    },
+    ".teraterm": {
+      "count": 1,
+      "total_size_bytes": 1760
+    },
+    ".vte": {
+      "count": 1,
+      "total_size_bytes": 3608
+    },
+    ".vte-256color": {
+      "count": 1,
+      "total_size_bytes": 3760
+    },
+    ".xterm-256color": {
+      "count": 1,
+      "total_size_bytes": 3681
+    },
+    ".xterm-r6": {
+      "count": 1,
+      "total_size_bytes": 1607
+    },
+    ".xterm-xfree86": {
+      "count": 1,
+      "total_size_bytes": 3783
+    },
+    ".train": {
+      "count": 3,
+      "total_size_bytes": 739
+    },
+    ".stderr": {
+      "count": 1,
+      "total_size_bytes": 311
+    },
+    ".images": {
+      "count": 1,
+      "total_size_bytes": 24
+    },
+    ".traineddata": {
+      "count": 1,
+      "total_size_bytes": 4113088
+    },
+    ".nochop": {
+      "count": 1,
+      "total_size_bytes": 37
+    },
+    ".thumbnailer": {
+      "count": 10,
+      "total_size_bytes": 5287
+    },
+    ".cil": {
+      "count": 9,
+      "total_size_bytes": 8013
+    },
+    ".,ltd": {
+      "count": 1,
+      "total_size_bytes": 81
+    },
+    ".deps": {
+      "count": 3,
+      "total_size_bytes": 87
+    },
+    ".vapi": {
+      "count": 3,
+      "total_size_bytes": 19469
+    },
+    ".vim": {
+      "count": 1,
+      "total_size_bytes": 4977
+    },
+    ".spec": {
+      "count": 1,
+      "total_size_bytes": 444
+    },
+    ".portal": {
+      "count": 3,
+      "total_size_bytes": 1337
+    },
+    ".ent": {
+      "count": 19,
+      "total_size_bytes": 95179
+    },
+    ".tab": {
+      "count": 3,
+      "total_size_bytes": 41210
+    },
+    ".zi": {
+      "count": 1,
+      "total_size_bytes": 107469
+    },
+    ".xb": {
+      "count": 2,
+      "total_size_bytes": 16058084
+    },
+    ".sock": {
+      "count": 1,
+      "total_size_bytes": 26
+    },
+    ".kern": {
+      "count": 1,
+      "total_size_bytes": 3857639
+    },
+    ".linked": {
+      "count": 3,
+      "total_size_bytes": 3857897
+    },
+    ".monthly": {
+      "count": 1,
+      "total_size_bytes": 0
+    },
+    ".weekly": {
+      "count": 1,
+      "total_size_bytes": 0
+    }
+  },
+  "by_type": {
+    "directory": {
+      "count": 13521,
+      "total_size_bytes": 5620374
+    },
+    "file": {
+      "count": 115291,
+      "total_size_bytes": 6154597529
+    },
+    "symlink": {
+      "count": 21577,
+      "total_size_bytes": 968523
+    }
+  },
+  "by_ownership": {
+    "uid_0": {
+      "uid": 0,
+      "count": 150355,
+      "total_size_bytes": 6161186142,
+      "by_gid": {
+        "gid_0": {
+          "gid": 0,
+          "count": 150312,
+          "total_size_bytes": 6160240024
+        },
+        "gid_983": {
+          "gid": 983,
+          "count": 1,
+          "total_size_bytes": 33
+        },
+        "gid_7": {
+          "gid": 7,
+          "count": 17,
+          "total_size_bytes": 19985
+        },
+        "gid_990": {
+          "gid": 990,
+          "count": 2,
+          "total_size_bytes": 0
+        },
+        "gid_114": {
+          "gid": 114,
+          "count": 3,
+          "total_size_bytes": 186
+        },
+        "gid_980": {
+          "gid": 980,
+          "count": 7,
+          "total_size_bytes": 503026
+        },
+        "gid_54": {
+          "gid": 54,
+          "count": 1,
+          "total_size_bytes": 20096
+        },
+        "gid_971": {
+          "gid": 971,
+          "count": 1,
+          "total_size_bytes": 338880
+        },
+        "gid_48": {
+          "gid": 48,
+          "count": 1,
+          "total_size_bytes": 19768
+        },
+        "gid_81": {
+          "gid": 81,
+          "count": 1,
+          "total_size_bytes": 32408
+        },
+        "gid_35": {
+          "gid": 35,
+          "count": 1,
+          "total_size_bytes": 16
+        },
+        "gid_22": {
+          "gid": 22,
+          "count": 4,
+          "total_size_bytes": 11720
+        },
+        "gid_978": {
+          "gid": 978,
+          "count": 1,
+          "total_size_bytes": 0
+        },
+        "gid_190": {
+          "gid": 190,
+          "count": 1,
+          "total_size_bytes": 0
+        },
+        "gid_173": {
+          "gid": 173,
+          "count": 1,
+          "total_size_bytes": 0
+        },
+        "gid_12": {
+          "gid": 12,
+          "count": 1,
+          "total_size_bytes": 0
+        }
+      }
+    },
+    "uid_173": {
+      "uid": 173,
+      "count": 2,
+      "total_size_bytes": 40,
+      "by_gid": {
+        "gid_173": {
+          "gid": 173,
+          "count": 2,
+          "total_size_bytes": 40
+        }
+      }
+    },
+    "uid_48": {
+      "uid": 48,
+      "count": 3,
+      "total_size_bytes": 10,
+      "by_gid": {
+        "gid_48": {
+          "gid": 48,
+          "count": 3,
+          "total_size_bytes": 10
+        }
+      }
+    },
+    "uid_979": {
+      "uid": 979,
+      "count": 2,
+      "total_size_bytes": 6,
+      "by_gid": {
+        "gid_979": {
+          "gid": 979,
+          "count": 2,
+          "total_size_bytes": 6
+        }
+      }
+    },
+    "uid_981": {
+      "uid": 981,
+      "count": 1,
+      "total_size_bytes": 0,
+      "by_gid": {
+        "gid_981": {
+          "gid": 981,
+          "count": 1,
+          "total_size_bytes": 0
+        }
+      }
+    },
+    "uid_107": {
+      "uid": 107,
+      "count": 7,
+      "total_size_bytes": 68,
+      "by_gid": {
+        "gid_107": {
+          "gid": 107,
+          "count": 7,
+          "total_size_bytes": 68
+        }
+      }
+    },
+    "uid_113": {
+      "uid": 113,
+      "count": 1,
+      "total_size_bytes": 0,
+      "by_gid": {
+        "gid_113": {
+          "gid": 113,
+          "count": 1,
+          "total_size_bytes": 0
+        }
+      }
+    },
+    "uid_29": {
+      "uid": 29,
+      "count": 3,
+      "total_size_bytes": 16,
+      "by_gid": {
+        "gid_29": {
+          "gid": 29,
+          "count": 3,
+          "total_size_bytes": 16
+        }
+      }
+    },
+    "uid_990": {
+      "uid": 990,
+      "count": 1,
+      "total_size_bytes": 0,
+      "by_gid": {
+        "gid_990": {
+          "gid": 990,
+          "count": 1,
+          "total_size_bytes": 0
+        }
+      }
+    },
+    "uid_980": {
+      "uid": 980,
+      "count": 11,
+      "total_size_bytes": 128,
+      "by_gid": {
+        "gid_980": {
+          "gid": 980,
+          "count": 11,
+          "total_size_bytes": 128
+        }
+      }
+    },
+    "uid_59": {
+      "uid": 59,
+      "count": 2,
+      "total_size_bytes": 0,
+      "by_gid": {
+        "gid_0": {
+          "gid": 0,
+          "count": 1,
+          "total_size_bytes": 0
+        },
+        "gid_59": {
+          "gid": 59,
+          "count": 1,
+          "total_size_bytes": 0
+        }
+      }
+    },
+    "uid_993": {
+      "uid": 993,
+      "count": 1,
+      "total_size_bytes": 16,
+      "by_gid": {
+        "gid_993": {
+          "gid": 993,
+          "count": 1,
+          "total_size_bytes": 16
+        }
+      }
+    }
+  }
+}

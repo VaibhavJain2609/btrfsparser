@@ -9,6 +9,17 @@ from dataclasses import dataclass, field
 
 from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock, BtrfsFileExtentItem
 from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode, parse_inode_flags
+from typing import Dict, List, Optional, BinaryIO
+from dataclasses import dataclass, field
+
+from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock
+from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode
+import hashlib
+from typing import Dict, List, Optional, BinaryIO
+from dataclasses import dataclass, field
+
+from structures import BtrfsInodeItem, BtrfsDirItem, BtrfsSuperblock, BtrfsFileExtentItem
+from constants import BTRFS_TYPE, BTRFS_OBJECTID, parse_mode, parse_inode_flags
 from chunk import ChunkMap
 from btree import traverse_tree_all
 
@@ -60,6 +71,9 @@ class FileSystem:
     parents: Dict[int, int] = field(default_factory=dict)         # inode -> parent_inode
     children: Dict[int, List[int]] = field(default_factory=dict)  # inode -> [child_inodes]
     dir_entries: Dict[int, List[BtrfsDirItem]] = field(default_factory=dict)
+    xattrs: Dict[int, List[tuple]] = field(default_factory=dict)  # inode -> [(name, value)]
+    extents: Dict[int, List[tuple]] = field(default_factory=dict) # inode -> [(file_offset, disk_bytenr, disk_bytes, compression)]
+    checksums: Dict[int, int] = field(default_factory=dict)       # logical_offset -> checksum_count
     xattrs: Dict[int, List[tuple]] = field(default_factory=dict)  # inode -> [(name, value)]
     extents: Dict[int, List[tuple]] = field(default_factory=dict) # inode -> [(file_offset, disk_bytenr, disk_bytes, compression)]
     checksums: Dict[int, int] = field(default_factory=dict)       # logical_offset -> checksum_count

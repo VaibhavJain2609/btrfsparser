@@ -18,6 +18,7 @@ from superblock import read_superblock, print_superblock_info
 from chunk import parse_sys_chunk_array, read_chunk_tree, ChunkMap
 from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes, parse_checksum_tree
 from output import to_json, to_csv, to_console, to_tree
+from statistics import calculate_statistics, write_statistics_json
 
 
 def parse_offset(value: str) -> int:
@@ -30,6 +31,26 @@ def parse_offset(value: str) -> int:
         return int(value, 16)
     else:
         return int(value)
+
+
+def derive_stats_filename(file_path: str) -> str:
+    """Generate statistics filename from a given file path.
+
+    Args:
+        file_path: Path to image or output file
+
+    Returns:
+        Path to statistics file in same directory
+
+    Examples:
+        /path/to/image.img -> /path/to/image_stats.json
+        output.json -> output_stats.json
+        /path/to/output.json -> /path/to/output_stats.json
+    """
+    from pathlib import Path
+    p = Path(file_path)
+    stats_filename = f"{p.stem}_stats.json"
+    return str(p.parent / stats_filename)
 
 
 def main():
@@ -153,6 +174,24 @@ Offset formats:
 
         if args.verbose:
             print(f"  Extracted {len(entries)} entries", file=sys.stderr)
+            print(file=sys.stderr)
+
+        # Step 5.5: Generate statistics automatically
+        if args.verbose:
+            print("Calculating statistics...", file=sys.stderr)
+
+        stats = calculate_statistics(entries)
+
+        # Save statistics in same directory as output file if specified, otherwise same as image
+        if args.file:
+            stats_path = derive_stats_filename(args.file)
+        else:
+            stats_path = derive_stats_filename(args.image)
+
+        write_statistics_json(stats, stats_path)
+
+        if args.verbose:
+            print(f"Statistics written to {stats_path}", file=sys.stderr)
             print(file=sys.stderr)
 
         # Step 6: Generate output

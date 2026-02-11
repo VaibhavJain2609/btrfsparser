@@ -9,16 +9,21 @@ Usage:
   python btrfs_parser.py image.img -o csv -f out.csv  # CSV to file
   python btrfs_parser.py image.img --info-only        # Just show superblock info
   python btrfs_parser.py image.img -p 4198400         # Partition at sector 4198400
+  python btrfs_parser.py image.img -a                 # Auto-detect BTRFS partitions
+  python btrfs_parser.py image.img --recent 10        # 10 most recently accessed files
+  python btrfs_parser.py image.img --extract          # Interactive file extraction
 """
 
 import argparse
+import os
 import sys
 
 from superblock import read_superblock, print_superblock_info
 from chunk import parse_sys_chunk_array, read_chunk_tree, ChunkMap
-from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes, parse_checksum_tree
+from filesystem import find_fs_tree_root, parse_filesystem, extract_files, find_all_subvolumes, parse_all_subvolumes, parse_checksum_tree, read_file_data, FileSystem
 from output import to_json, to_csv, to_console, to_tree
 from statistics import calculate_statistics, write_statistics_json
+from partition_detect import detect_btrfs_partitions, format_partition_list
 
 
 def parse_offset(value: str) -> int:
@@ -53,6 +58,127 @@ def derive_stats_filename(file_path: str) -> str:
     return str(p.parent / stats_filename)
 
 
+def interactive_extract(image_path, entries, fs, chunk_map):
+    """Interactive file extraction loop.
+
+    Allows user to search for files, select them, and extract to a destination.
+    """
+    # Build lookup from entries (files only)
+    file_entries = [e for e in entries if e.type == 'file']
+
+    if not file_entries:
+        print("No files available for extraction.", file=sys.stderr)
+        return
+
+    print("\n=== File Extraction Mode (type 'exit' to quit) ===\n")
+
+    while True:
+        try:
+            search = input("Search for file: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting extraction mode.")
+            break
+
+        if search.lower() == 'exit':
+            print("Exiting extraction mode.")
+            break
+
+        if not search:
+            continue
+
+        # Case-insensitive substring match on path
+        matches = [e for e in file_entries if search.lower() in e.path.lower()]
+
+        if not matches:
+            print(f"No files matching '{search}'.")
+            continue
+
+        # Display numbered results
+        print(f"\nFound {len(matches)} file(s):")
+        for i, entry in enumerate(matches, 1):
+            size_str = _format_size(entry.size)
+            print(f"  {i}. {entry.path} ({size_str})")
+
+        # Get user selection
+        try:
+            selection = input("\nSelect file number(s) (comma-separated, or 'back'): ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting extraction mode.")
+            break
+
+        if selection.lower() in ('back', ''):
+            continue
+
+        # Parse selected indices
+        selected = []
+        for part in selection.split(','):
+            part = part.strip()
+            try:
+                idx = int(part)
+                if 1 <= idx <= len(matches):
+                    selected.append(matches[idx - 1])
+                else:
+                    print(f"  Skipping invalid selection: {idx}")
+            except ValueError:
+                print(f"  Skipping invalid input: {part}")
+
+        if not selected:
+            continue
+
+        # Get destination directory
+        try:
+            dest = input("Destination directory: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting extraction mode.")
+            break
+
+        if not dest:
+            dest = '.'
+
+        # Create destination if it doesn't exist
+        os.makedirs(dest, exist_ok=True)
+
+        # Extract selected files
+        with open(image_path, 'rb') as f:
+            for entry in selected:
+                if entry.unique_inode is None or entry.unique_inode not in fs.extents:
+                    print(f"  [SKIP] {entry.name} - no extent data available")
+                    continue
+
+                try:
+                    extents = fs.extents[entry.unique_inode]
+                    data = read_file_data(f, extents, chunk_map, entry.size)
+                    out_path = os.path.join(dest, entry.name)
+
+                    # Avoid overwriting: append number if file exists
+                    if os.path.exists(out_path):
+                        base, ext = os.path.splitext(entry.name)
+                        counter = 1
+                        while os.path.exists(out_path):
+                            out_path = os.path.join(dest, f"{base}_{counter}{ext}")
+                            counter += 1
+
+                    with open(out_path, 'wb') as out_f:
+                        out_f.write(data)
+                    print(f"  [OK] {entry.path} -> {out_path} ({_format_size(len(data))})")
+                except Exception as e:
+                    print(f"  [ERROR] {entry.name}: {e}")
+
+        print()  # Blank line before next search
+
+
+def _format_size(size):
+    """Format byte size to human-readable string."""
+    if size < 1024:
+        return f"{size} B"
+    elif size < 1024 * 1024:
+        return f"{size / 1024:.1f} KB"
+    elif size < 1024 * 1024 * 1024:
+        return f"{size / (1024 * 1024):.1f} MB"
+    else:
+        return f"{size / (1024 * 1024 * 1024):.1f} GB"
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Parse BTRFS filesystem from image file',
@@ -60,6 +186,7 @@ def main():
         epilog='''
 Examples:
   %(prog)s image.img                         # Console output (partition at start)
+  %(prog)s image.img -a                      # Auto-detect BTRFS partitions
   %(prog)s image.img -p 4198400s             # Partition at sector 4198400
   %(prog)s image.img -p 0x80280000           # Partition at hex offset
   %(prog)s image.img -p 2149580800           # Partition at byte offset
@@ -67,6 +194,10 @@ Examples:
   %(prog)s image.img -o csv -f out.csv       # CSV to file
   %(prog)s image.img --info-only             # Just show superblock info
   %(prog)s image.img -o tree                 # Tree view
+  %(prog)s image.img --recent 10              # 10 most recently accessed files
+  %(prog)s image.img --recent 5 -o json       # Recent files as JSON
+  %(prog)s image.img --extract                # Interactive file extraction
+  %(prog)s image.img --recent 10 --extract    # Recent files + extraction
 
 Offset formats:
   4198400s    - Sector number (multiplied by 512)
@@ -76,6 +207,8 @@ Offset formats:
     )
 
     parser.add_argument('image', help='Path to BTRFS image file (.img)')
+    parser.add_argument('-a', '--auto-detect', action='store_true',
+                        help='Automatically detect BTRFS partitions (prompts if multiple found)')
     parser.add_argument('-p', '--partition-offset',
                         type=str, default='4198400s',
                         help='Partition start offset (sectors with "s" suffix, hex with "0x", or bytes)')
@@ -89,12 +222,74 @@ Offset formats:
                         help='Only show superblock info, do not parse files')
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Verbose output')
+    parser.add_argument('-r', '--recent', type=int, metavar='N',
+                        help='Show N most recently accessed files (sorted by atime)')
+    parser.add_argument('-e', '--extract', action='store_true',
+                        help='Interactive file extraction mode')
 
     args = parser.parse_args()
 
     try:
-        # Parse partition offset
-        partition_offset = parse_offset(args.partition_offset)
+        # Handle automatic partition detection
+        partition_offset = None
+
+        if args.auto_detect:
+            if args.verbose:
+                print(f"Scanning {args.image} for BTRFS partitions...", file=sys.stderr)
+
+            partitions = detect_btrfs_partitions(args.image)
+
+            if not partitions:
+                print("Error: No BTRFS partitions detected in image", file=sys.stderr)
+                return 1
+
+            if len(partitions) == 1:
+                # Single partition found, show it to user
+                print(f"Found 1 BTRFS partition:", file=sys.stderr)
+                print(f"  {partitions[0]}", file=sys.stderr)
+                print(file=sys.stderr)
+                partition_offset = partitions[0].offset
+            else:
+                # Multiple partitions found, prompt user
+                print("Detected multiple BTRFS partitions:", file=sys.stderr)
+                print(format_partition_list(partitions), file=sys.stderr)
+                print(file=sys.stderr)
+
+                while True:
+                    try:
+                        choice = input("Select partition number to parse: ").strip()
+                        selected_index = int(choice)
+
+                        # Find partition with matching index
+                        selected = None
+                        for p in partitions:
+                            if p.index == selected_index:
+                                selected = p
+                                break
+
+                        if selected:
+                            partition_offset = selected.offset
+                            print(f"Selected: {selected}", file=sys.stderr)
+                            print(file=sys.stderr)
+                            break
+                        else:
+                            print(f"Invalid selection. Please choose from: {[p.index for p in partitions]}", file=sys.stderr)
+                    except (ValueError, EOFError, KeyboardInterrupt):
+                        print("\nError: Invalid input or interrupted", file=sys.stderr)
+                        return 1
+
+            # Ask for confirmation before parsing
+            try:
+                confirm = input("Proceed with parsing? [Y/n]: ").strip().lower()
+                if confirm and confirm not in ['y', 'yes']:
+                    print("Parsing cancelled.", file=sys.stderr)
+                    return 0
+            except (EOFError, KeyboardInterrupt):
+                print("\nParsing cancelled.", file=sys.stderr)
+                return 0
+        else:
+            # Use manual partition offset
+            partition_offset = parse_offset(args.partition_offset)
 
         if args.verbose:
             if partition_offset > 0:
@@ -176,6 +371,17 @@ Offset formats:
             print(f"  Extracted {len(entries)} entries", file=sys.stderr)
             print(file=sys.stderr)
 
+        # Apply --recent filter: show N most recently accessed files
+        if args.recent:
+            # Filter to files only (exclude directories, symlinks, etc.)
+            file_entries = [e for e in entries if e.type == 'file']
+            # Sort by atime descending (most recent first)
+            file_entries.sort(key=lambda e: e.atime, reverse=True)
+            # Take top N
+            entries = file_entries[:args.recent]
+            if args.verbose:
+                print(f"  Showing {len(entries)} most recently accessed files", file=sys.stderr)
+
         # Step 5.5: Generate statistics automatically
         if args.verbose:
             print("Calculating statistics...", file=sys.stderr)
@@ -212,6 +418,10 @@ Offset formats:
                 print(f"Output written to {args.file}", file=sys.stderr)
         else:
             print(output)
+
+        # Interactive file extraction mode
+        if args.extract:
+            interactive_extract(args.image, entries, fs, chunk_map)
 
         return 0
 

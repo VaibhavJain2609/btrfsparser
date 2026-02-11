@@ -66,6 +66,8 @@ class FileEntry:
     # Cryptographic hashes
     md5: Optional[str] = None                 # MD5 hash of file contents
     sha256: Optional[str] = None              # SHA256 hash of file contents
+    # Internal: unique inode for extent lookup during extraction
+    unique_inode: Optional[int] = None
 
 
 @dataclass
@@ -776,6 +778,9 @@ def extract_files(fs: FileSystem, chunk_map: Optional[ChunkMap] = None,
                 # Phase 4: Checksum count
                 checksum_count=count_checksums(unique_inode)
             )
+
+            # Store unique_inode for extraction lookup
+            entry.unique_inode = unique_inode
 
             # Calculate physical offset if we have extents and chunk_map
             if chunk_map and unique_inode in fs.extents and fs.extents[unique_inode]:

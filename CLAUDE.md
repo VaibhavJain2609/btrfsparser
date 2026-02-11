@@ -9,6 +9,10 @@ A pure Python parser for BTRFS filesystems that reads disk images and extracts f
 ## Commands
 
 ```bash
+# Auto-detect BTRFS partitions (recommended for multi-partition images)
+python btrfs_parser.py image.img -a               # Auto-detect and prompt if multiple found
+python btrfs_parser.py image.img -a -v            # Verbose output during detection
+
 # Parse BTRFS image (console output)
 python btrfs_parser.py image.img
 
@@ -39,7 +43,10 @@ python debug.py image.img [partition_offset]
 The parser follows BTRFS's layered architecture:
 
 ```
-btrfs_parser.py   # CLI entry point, orchestrates the parsing pipeline
+btrfs_parser.py     # CLI entry point, orchestrates the parsing pipeline
+    │
+    ├── partition_detect.py  # Auto-detect BTRFS partitions (MBR/GPT support)
+    │   └── detect_btrfs_partitions()  # Scans for BTRFS signature in partitions
     │
     ├── superblock.py    # Reads superblock at offset 0x10000
     │
@@ -59,6 +66,25 @@ btrfs_parser.py   # CLI entry point, orchestrates the parsing pipeline
     │
     └── statistics.py    # Statistics calculation and aggregation
 ```
+
+### Partition Detection
+
+The parser can automatically detect BTRFS partitions in disk images using the `-a` flag:
+
+1. **Partition Table Reading** (`partition_detect.py`):
+   - Reads MBR (Master Boot Record) partition tables at offset 0x0
+   - Reads GPT (GUID Partition Table) headers at LBA 1 (offset 512)
+   - Parses partition entries to extract start offset and size
+
+2. **BTRFS Signature Detection**:
+   - Checks each partition for BTRFS magic bytes `_BHRfS_M` at offset 0x10000
+   - Extracts BTRFS label from superblock if present
+   - Returns list of detected BTRFS partitions
+
+3. **User Selection**:
+   - If single partition found: used automatically
+   - If multiple partitions found: prompts user to select
+   - If no partitions found: reports error
 
 ### Parsing Pipeline
 
